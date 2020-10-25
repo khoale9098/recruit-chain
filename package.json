@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "recruit-chain",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "web": "yarn workspace @recruit-chain/web start",
+    "api": "yarn workspace  @recruit-chain/server start",
+    "start": "npm-run-all --parallell api web"
+  },
+  "repository": "https://github.com/khoale9098/recruit-chain.git",
+  "author": "Khoa Le <43885032+khoale9098@users.noreply.github.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.12.0",
+    "lint-staged": "^10.4.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "lint-staged": {
+    "*.(js|ts)": "eslint --cache --fix"
+  }
+}
