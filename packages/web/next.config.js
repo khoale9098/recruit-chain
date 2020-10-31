@@ -1,7 +1,3 @@
-const {
-  PHASE_DEVELOPMENT_SERVER,
-  PHASE_PRODUCTION_BUILD,
-} = require("next/constants");
 const path = require("path");
 
 module.exports = (phase) => {

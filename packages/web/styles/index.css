@@ -1,5 +1,7 @@
 @tailwind base;
 
+@import './antd-theme.css';
+
 /* Write your own custom base styles here */
 
 /* Start purging... */
@@ -7,10 +9,17 @@
 /* Stop purging. */
 
 /* Write your own custom component styles here */
-.btn-blue {
-  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+.btn-primary:hover {
+  color: #fff;
+  background-color: #2e49f7;
+  border-color: #223ef6;
 }
 
+.btn-primary {
+  color: #fff;
+  background-color: #5369f8;
+  border-color: #5369f8;
+}
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
