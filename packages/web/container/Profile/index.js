@@ -11,7 +11,7 @@ const ProfileUI = () => {
   return (
     <div className="w-full pb-12">
       <div className="w-full flex">
-        <div className="w-8/12">
+        <div className="w-full flex-1">
           <section className="overflow-visible bg-white rounded-sm shadow-md">
             <CoverImage />
             <div className="px-6 pb-6">
@@ -43,7 +43,7 @@ const ProfileUI = () => {
           <Education />
           <Experience />
         </div>
-        <div className="w-4/12 bg-white ml-2">
+        <div className="ml-2 w-full" style={{ maxWidth: '380px' }}>
           <RightSideContainer />
         </div>
       </div>
