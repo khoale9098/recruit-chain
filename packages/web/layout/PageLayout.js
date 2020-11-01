@@ -20,7 +20,7 @@ const PageLayout = ({ children }) => {
             <h3 className="font-bold text-lg py-4 pl-3"> Your Profile</h3>
             <div className="pl-4 text-gray-600">was online at 01-11-2020 at 12:32:37</div>
           </div>
-          <div className="ml-4 my-2 ">{children}</div>
+          <div className="mx-4 px-2 my-2 ">{children}</div>
         </Content>
       </Layout>
     </Layout>
