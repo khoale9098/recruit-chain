@@ -16,11 +16,9 @@ const PageLayout = ({ children }) => {
       <Layout className="site-layout">
         <HeaderLayout collapsed={collapsed} setCollapsed={setCollapsed} />
         <Content className="site-layout-background">
-          <div className="flex bg-white items-center shadow-xs">
-            <h3 className="font-bold text-lg py-4 pl-3"> Your Profile</h3>
-            <div className="pl-4 text-gray-600">was online at 01-11-2020 at 12:32:37</div>
+          <div className="mx-4 px-2 my-2 " style={{ paddingTop: '72px' }}>
+            {children}
           </div>
-          <div className="mx-4 px-2 my-2 ">{children}</div>
         </Content>
       </Layout>
     </Layout>

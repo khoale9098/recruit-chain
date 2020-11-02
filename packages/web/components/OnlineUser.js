@@ -17,7 +17,7 @@ const OnlineUser = ({ isCollapsed }) => {
       </span>
       {!isCollapsed && (
         <>
-          <h3 className="font-bold pt-2 text-base">John Live</h3>
+          <h3 className="font-bold pt-2 text-base">Khoa Le</h3>
           <span className="text-gray-500">employee</span>
         </>
       )}

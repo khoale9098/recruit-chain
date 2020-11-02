@@ -1,4 +1,3 @@
-import React from 'react'
 import ProfileUI from 'container/Profile'
 import PageLayout from 'layout/PageLayout'
 
