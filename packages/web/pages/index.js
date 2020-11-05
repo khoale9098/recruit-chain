@@ -1,9 +1,5 @@
-import PageLayout from '../layout/PageLayout'
+import AuthLoader from 'container/Auth'
 
 export default function IndexPage() {
-  return (
-    <PageLayout>
-      <div>1</div>
-    </PageLayout>
-  )
+  return <AuthLoader />
 }
