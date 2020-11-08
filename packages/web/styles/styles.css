@@ -1,9 +1,7 @@
-@tailwind base;
-@tailwind components;
-
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 @import './antd-theme.css';
 @import './antd-apply.css';
-
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,900&display=swap');
 
 /* Write your own custom base styles here */
@@ -21,8 +19,4 @@
   border-color: #223ef6;
 }
 
-/* Start purging... */
-@tailwind utilities;
-/* Stop purging. */
-
-/* Your own custom utilities */
+@import 'tailwindcss/utilities';
