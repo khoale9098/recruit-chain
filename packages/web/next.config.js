@@ -7,7 +7,7 @@ module.exports = (phase) => {
       "components",
       "pages",
       "utils",
-      "store",
+      "styles",
       "constants",
     ];
     function generateAbsolutePath(partName) {
