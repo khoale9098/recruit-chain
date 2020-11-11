@@ -3,3 +3,8 @@ export const ENV = {
   PRODUCTION: 'production',
 } as const
 
+export const GENDER = {
+  MALE: 'male',
+  FEMALE: 'female',
+  OTHER: 'other'
+} as const
