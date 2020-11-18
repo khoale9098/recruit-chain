@@ -7,6 +7,8 @@ import helmet from 'helmet'
 import { createServer } from 'http'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import oauth from './setting/oauth'
+
 import path from 'path'
 
 
@@ -26,6 +28,8 @@ app.get('/robots.txt', (req, res) => {
   res.type('text/plain')
   res.send('User-agent: *\nDisallow: /admins')
 })
+oauth(app)
+
 
 const dbUri = `mongodb://localhost:27017/recruit-chain`
 console.log('MONGO URL ')
@@ -50,6 +54,6 @@ mongoose.connection.on('disconnected', () => {
 })
 
 const httpServer = createServer(app)
-httpServer.listen({ port: 3000 }, () => {
-  console.log('NODE_ENV', '3000')
+httpServer.listen({ port: 3002 }, () => {
+  console.log('NODE_ENV', '3002')
 })

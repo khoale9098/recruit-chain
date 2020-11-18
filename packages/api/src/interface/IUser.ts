@@ -3,24 +3,29 @@ import { Types, Document } from 'mongoose'
 interface IUser extends Document {
   username?: string,
   name?: string,
+  email?: string,
   about?: string,
   avatar?: string,
   coverImage?: string,
   birthday: Date,
+  password?: string,
   address?: string,
-  gender?: string,
   status?: string,
+  gender?: string,
+  loginClientIp: string,
   note?: string,
   language?: string,
+  following?: Types.ObjectId[] | IUser[],
+  connect?: Types.ObjectId[] | IUser[]
   searchHistory?: string[]
-  activityLogs: [
+  activityLogs?: [
     {
-      place?: string,
-      geometry: { x: Number, y: Number },
-      deviceType?: string,
-      activatedAt: Date,
-      clientIp?: string,
-    },
+      place?: string
+      geometry?: { x: number; y: number }
+      deviceType?: string
+      activatedAt?: Date
+      clientIp?: string
+    }
   ],
   createdAt: Date,
   updatedAt: Date,
