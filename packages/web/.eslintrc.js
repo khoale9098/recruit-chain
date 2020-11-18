@@ -17,6 +17,7 @@ module.exports = {
     fetch: true,
   },
   rules: {
+    'import/prefer-default-export': 0,
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'warn',

@@ -1,29 +1,19 @@
 import React from 'react'
 import { Form, Input, Button } from 'antd'
-import { login } from 'core/api'
 
-const LOGIN_FIELD = {
-  EMAIL: 'username',
+const REGISTER_FIELD = {
+  USERNAME: 'username',
+  EMAIL: 'email',
   PASSWORD: 'password',
-  USER_TYPE: 'userType',
-}
-const USER_TYPE = {
-  EMPLOYEE: 'employee',
-  EMPLOYER: 'employer',
 }
 
-const LoginForm = () => {
-  const onSubmit = async (values) => {
-    console.log(values)
-    const response = await login(values)
-    console.log('response', response)
-  }
-
+const RegisterForm = () => {
+  const onSubmit = () => {}
   return (
     <Form onFinish={onSubmit}>
       <div>
         <div className="text-sm font-bold text-gray-700 tracking-wide">Email Address</div>
-        <Form.Item name={LOGIN_FIELD.EMAIL} rules={[{ required: true, type: 'email', message: 'Please enter email!' }]}>
+        <Form.Item name={REGISTER_FIELD.EMAIL} rules={[{ required: true, type: 'email', message: 'Please enter email!' }]}>
           <Input
             className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
             placeholder="mike@gmail.com"
@@ -39,7 +29,7 @@ const LoginForm = () => {
             </div>
           </div>
         </div>
-        <Form.Item name={LOGIN_FIELD.PASSWORD} rules={[{ required: true, message: 'Please enter password!' }]}>
+        <Form.Item name={REGISTER_FIELD.PASSWORD} rules={[{ required: true, message: 'Please enter password!' }]}>
           <Input
             type="password"
             className="w-full text-lg py-2 rounded-sm focus:outline-none focus:border-indigo-500 "
@@ -51,7 +41,7 @@ const LoginForm = () => {
         <Button
           htmlType="submit"
           className="bg-indigo-500 text-white flex items-center justify-center w-full rounded-full tracking-wide font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600 hover:text-white
-              shadow-lg"
+            shadow-lg"
           style={{ height: '48px' }}
         >
           Log In
@@ -61,4 +51,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm

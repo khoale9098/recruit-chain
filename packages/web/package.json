@@ -12,14 +12,20 @@
     "@ant-design/icons": "^4.2.2",
     "@next/bundle-analyzer": "^9.5.5",
     "antd": "^4.7.3",
+    "apollo-link-http": "^1.5.17",
     "dayjs": "^1.9.4",
+    "graphql": "^15.4.0",
+    "ky": "^0.25.0",
+    "ky-universal": "^0.8.2",
     "next": "^10.0.1",
+    "nookies": "^2.5.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "qs": "^6.9.4",
     "rc-tween-one": "^2.7.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "recoil": "^0.1.2"
   },
   "devDependencies": {
     "@emeks/antd-custom-theme-generator": "^0.1.6",

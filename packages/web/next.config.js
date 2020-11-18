@@ -1,24 +1,17 @@
-const path = require("path");
+const path = require('path')
 
 module.exports = (phase) => {
   webpack = (config) => {
-    const absoluteImportParts = [
-      "public",
-      "components",
-      "pages",
-      "utils",
-      "styles",
-      "constants",
-    ];
+    const absoluteImportParts = ['public', 'components', 'pages', 'utils', 'styles', 'constants']
     function generateAbsolutePath(partName) {
-      const aliasName = `~/${partName}`;
-      const importPath = path.join(__dirname, partName);
-      config.resolve.alias[aliasName] = importPath;
+      const aliasName = `~/${partName}`
+      const importPath = path.join(__dirname, partName)
+      config.resolve.alias[aliasName] = importPath
     }
-    absoluteImportParts.forEach(generateAbsolutePath);
-    return config;
-  };
+    absoluteImportParts.forEach(generateAbsolutePath)
+    return config
+  }
   return {
     webpack,
-  };
-};
+  }
+}
