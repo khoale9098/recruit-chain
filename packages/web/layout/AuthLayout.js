@@ -1,10 +1,8 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 import BannerImage from 'components/BannerImage'
+import PropTypes from 'prop-types'
 
-const Login = dynamic(() => import('./Login'))
-
-const AuthLoader = () => {
+const AuthLayout = ({ children }) => {
   return (
     <div className="lg:flex">
       <div className="hidden lg:flex items-center justify-center flex-1 h-screen">
@@ -12,9 +10,12 @@ const AuthLoader = () => {
           <BannerImage />
         </div>
       </div>
-      <Login />
+      {children}
     </div>
   )
 }
 
-export default AuthLoader
+AuthLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+export default AuthLayout

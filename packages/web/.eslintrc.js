@@ -26,5 +26,6 @@ module.exports = {
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'react/jsx-props-no-spreading': 0,
+    'jsx-a11y/anchor-is-valid': 0,
   },
 }

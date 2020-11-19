@@ -1,5 +1,12 @@
-import AuthLoader from 'container/Auth'
+import AuthLayout from 'layout/AuthLayout'
+import dynamic from 'next/dynamic'
+
+const Login = dynamic(() => import('container/Auth/Login'))
 
 export default function IndexPage() {
-  return <AuthLoader />
+  return (
+    <AuthLayout>
+      <Login />
+    </AuthLayout>
+  )
 }
