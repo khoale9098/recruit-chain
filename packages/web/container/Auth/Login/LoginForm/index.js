@@ -3,7 +3,7 @@ import { Form, Input, Button } from 'antd'
 import { login } from 'core/api'
 
 const LOGIN_FIELD = {
-  EMAIL: 'username',
+  EMAIL: 'email',
   PASSWORD: 'password',
   USER_TYPE: 'userType',
 }
