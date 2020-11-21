@@ -7,23 +7,30 @@ import { userService } from '../../services'
 const oauth = (app: Application) => {
   app.post('/auth/register', async (req: Request, res: Response) => {
     try {
-      const { username, deviceType, deviceOS } = req.body
-      let user = await userService.getOne({ cond: { email: username } })
+      const { email, firstName, lastName, password, username } = req.body
+
+      let user = await userService.getOne({ cond: { username } })
       if (user) {
         throw new Error('INVALID_USER')
       }
-      user = await userService.signUp({ email: username } as any)
+      user = await userService.signUp({
+        email,
+        username,
+        firstName,
+        lastName,
+        password: User.generateHash(password)
+      } as any)
+
       const data = await mapProfile2User(
         {
           id: user._id,
           provider: 'unknown',
           loginClientIp: req.clientIp,
-          deviceType,
-          deviceOS,
         },
         (req.query.scope as string) || 'mobile'
       )
-      return res.status(200).json({ success: true, data })
+
+      return res.status(200).json({ success: true, user: data })
     } catch (err) {
       console.log(err)
       res.status(403).json({
@@ -33,12 +40,14 @@ const oauth = (app: Application) => {
       })
     }
   })
+
   app.post('/auth/login', async (req: Request, res: Response) => {
     try {
-      const { username, password, deviceType, deviceOS } = req.body
+      const { email, password } = req.body
+
       const user = await userService.getOne({
         cond: {
-          $or: [{ email: username }, { phone: username }],
+          $or: [{ email }],
         },
       })
       if (!user || !User.validPassword(password, user.password)) {
@@ -46,17 +55,13 @@ const oauth = (app: Application) => {
       }
       const data = await mapProfile2User(
         {
-          // phone: user.phone,
-          // provider: 'phone',
           id: user._id,
           provider: 'unknown',
           loginClientIp: req.clientIp,
-          deviceType,
-          deviceOS,
         },
         (req.query.scope as string) || 'mobile'
       )
-      return res.status(200).json({ success: true, data })
+      return res.status(200).json({ success: true, data, title })
     } catch (err) {
       console.log(err)
       res.status(401).json({

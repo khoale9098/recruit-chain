@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import moment from 'moment'
 import {
   Schema,
   model,
@@ -8,13 +10,16 @@ import {
 import mongoosePaginate from 'mongoose-paginate-v2'
 import IUser from '../interface/IUser'
 
+
 import { GENDER, USER } from '../setting/constants'
+import config from '../setting/env'
 
 const modelName = 'user'
 
 const schema = new Schema({
   username: { type: String, lowercase: true },
-  name: String,
+  firstName: String,
+  lastName: String,
   email: String,
   about: String,
   password: String,
@@ -53,16 +58,29 @@ const schema = new Schema({
   ],
   createdAt: Date,
   updatedAt: Date,
-})
 
-schema.statics.generateHash = function (password: string) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+},
+  { collection: modelName, timestamps: true }
+)
+
+schema.statics = {
+  generateHash: function (password: string) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+  },
+  validPassword: function (input: string, password: string) {
+    return bcrypt.compareSync(input, password)
+  },
+  decodeToken: function (token: string): Record<string, any> {
+    try {
+      const decoded = jwt.verify(token, config.JWT_SECRET)
+      return decoded as object
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
 }
 
-// checking if password is valid
-schema.statics.validPassword = function (input: string, password: string) {
-  return bcrypt.compareSync(input, password)
-}
 
 const indexTextField = {
   username: 'text',
@@ -77,6 +95,7 @@ interface IUserPagingModel<T extends Document> extends PaginateModel<T> {
   generateHash(password: string): string
   validPassword(input: string, password: string): boolean
 }
+
 
 const UserPagingModel: IUserPagingModel<IUser> = model<IUser>(modelName, schema) as IUserPagingModel<IUser>
 

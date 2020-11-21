@@ -26,22 +26,9 @@ export default {
     DB: 'mycat-api',
     DBPORT: 27017,
   },
-  S3: {
-    AUTH: {
-      accessKeyId: 'AKIA4JQ4QHSDWZUOK5O4',
-      secretAccessKey: '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',
-      region: 'ap-northeast-1',
-    },
-    BUCKET: 'mycats-stg',
-    FOLDERS: {
-      IMAGES: 'images/',
-      LOGS: 'logs/',
-      DB: 'db/',
-    },
-    LINK: 'https://s3-ap-northeast-1.amazonaws.com/',
-  },
+
   JWT: {
-    SECRET: '',
+    SECRET: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
     OPTIONS: {
       expiresIn: '30d'
     }
