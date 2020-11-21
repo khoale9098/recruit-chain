@@ -39,6 +39,19 @@ const post = async (url, json) => {
   return response
 }
 
-export const login = async (json) => post('auth/login', json)
+export const login = async (json) => {
+  const response = post('auth/login', json)
+  if (response?.token) {
+    setToken(response.token)
+  }
+  return response
+}
 
-export const register = (json) => post('auth/register', json)
+export const register = async (json) => {
+  const response = post('auth/register', json)
+
+  if (response?.token) {
+    setToken(response.token)
+  }
+  return response
+}

@@ -2,9 +2,8 @@ import React from 'react'
 import { parseCookies, setCookie } from 'nookies'
 import { RecoilRoot, useRecoilTransactionObserver_UNSTABLE as useRecoilObserver } from 'recoil'
 import registerPersistAtoms from 'store/registerPersist'
-import { RECOIL_PERSIST_COOKIE_KEY_NAME } from 'constants'
 
-const clientCookieKey = RECOIL_PERSIST_COOKIE_KEY_NAME
+const clientCookieKey = 'recoil_persistence'
 
 function PersistenceObserver({ children }) {
   useRecoilObserver(({ snapshot }) => {

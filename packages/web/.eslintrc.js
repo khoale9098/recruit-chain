@@ -19,7 +19,7 @@ module.exports = {
   rules: {
     'import/prefer-default-export': 0,
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
     'react/prop-types': 'warn',
     'react/jsx-filename-extension': 'off',
     'import/no-unresolved': 'off',

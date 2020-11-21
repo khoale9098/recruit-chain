@@ -1,22 +1,37 @@
 import React from 'react'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import { login } from 'core/api'
+import { useSetRecoilState } from 'recoil'
+import { authAtoms } from 'store'
 
 const LOGIN_FIELD = {
   EMAIL: 'email',
   PASSWORD: 'password',
   USER_TYPE: 'userType',
 }
-const USER_TYPE = {
-  EMPLOYEE: 'employee',
-  EMPLOYER: 'employer',
-}
 
 const LoginForm = () => {
+  const setUserPersist = useSetRecoilState(authAtoms.userPersisted)
+
   const onSubmit = async (values) => {
-    console.log(values)
-    const response = await login(values)
-    console.log('response', response)
+    try {
+      const response = await login(values)
+
+      const {
+        token,
+        user: { userType },
+        userId,
+      } = response.data
+      setUserPersist({
+        token,
+        userId,
+        userType,
+      })
+      message.success('Login successfuly!')
+    } catch (e) {
+      console.log(e)
+      // message.error('invalid')
+    }
   }
 
   return (
