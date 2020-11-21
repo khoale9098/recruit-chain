@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import Link from 'next/link'
-import { Form, Input, Button, Radio } from 'antd'
+import { Form, Input, Button } from 'antd'
+import { register } from 'core/api'
 
 const REGISTER_FIELD = {
   FIRST_NAME: 'firstName',
@@ -12,8 +12,9 @@ const REGISTER_FIELD = {
 }
 
 const RegisterForm = () => {
-  const onSubmit = (values) => {
-    console.log('values: ', values)
+  const onSubmit = async (values) => {
+    const res = await register(values)
+    console.log('RES: ', res)
   }
   return (
     <Form onFinish={onSubmit}>
