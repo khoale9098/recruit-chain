@@ -1,7 +1,7 @@
 import { Application, Response, Request } from 'express'
 import _ from 'lodash'
 import User from '../../models/user'
-import { issue, mapProfile2User } from './helper'
+import { mapProfile2User } from './helper'
 import { userService } from '../../services'
 
 const oauth = (app: Application) => {
@@ -61,7 +61,7 @@ const oauth = (app: Application) => {
         },
         (req.query.scope as string) || 'mobile'
       )
-      return res.status(200).json({ success: true, data, title })
+      return res.status(200).json({ success: true, data })
     } catch (err) {
       console.log(err)
       res.status(401).json({

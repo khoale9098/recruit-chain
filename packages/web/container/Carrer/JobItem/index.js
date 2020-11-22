@@ -26,6 +26,9 @@ const JobItem = () => {
             <Button className="rounded text-white font-semibold text-xs" style={{ background: '#5369f8' }}>
               +200,000 WORK
             </Button>
+            <Button className="rounded text-white font-semibold text-xs" style={{ background: '#5369f8' }}>
+              Share
+            </Button>
           </div>
         </div>
       </div>

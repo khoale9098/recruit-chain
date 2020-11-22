@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import moment from 'moment'
 import {
   Schema,
   model,
@@ -9,7 +8,6 @@ import {
 } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2'
 import IUser from '../interface/IUser'
-
 
 import { GENDER, USER } from '../setting/constants'
 import config from '../setting/env'
@@ -21,10 +19,12 @@ const schema = new Schema({
   firstName: String,
   lastName: String,
   email: String,
+  phone: String,
   about: String,
   password: String,
   avatar: String,
-  coverImage: String,
+  title: String,
+  coverImage: String, //Ảnh bìa
   birthday: Date,
   address: String,
   following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
@@ -43,9 +43,37 @@ const schema = new Schema({
     enum: Object(USER.USER_TYPE).values,
     default: USER.USER_TYPE.EMPLOYEE
   },
-  loginClientIp: String,
   note: String,
-  language: String,
+  language: [String],
+  // skill: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'skill'
+  // }],
+  experience: [{
+    type: Schema.Types.ObjectId,
+    ref: 'experience'
+  }],
+  education: [{
+    type: Schema.Types.ObjectId,
+    ref: 'experience'
+  }],
+  certifications: [{
+    type: Schema.Types.ObjectId,
+    ref: 'certification'
+  }],
+  // Company
+  website: String,
+  companyName: String,
+  companyType: String,
+  sizeMin: Number,
+  sizeMax: Number,
+  jobs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'job'
+  }],
+  foundedDate: Date,
+  // 
+  loginClientIp: String,
   searchHistory: [String],
   activityLogs: [
     {
@@ -56,9 +84,9 @@ const schema = new Schema({
       clientIp: String,
     },
   ],
+  isPrivate: { type: Boolean, default: false },
   createdAt: Date,
   updatedAt: Date,
-
 },
   { collection: modelName, timestamps: true }
 )
