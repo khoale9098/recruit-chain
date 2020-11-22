@@ -11,7 +11,7 @@ import mongoose from 'mongoose'
 import morgan from 'morgan'
 import oauth from './setting/oauth'
 import graphqlServer from './graphql'
-import { auth, consoleRequestInfo, ipMiddleware } from './setting/middleware'
+import { consoleRequestInfo, ipMiddleware } from './setting/middleware'
 
 import path from 'path'
 
@@ -25,7 +25,7 @@ app.use(bodyParser.json({ limit: '10mb' }))
 app.set('trust proxy', true)
 
 /* Security middleware */
-app.use(helmet())
+app.use(helmet({ contentSecurityPolicy: (process.env.NODE_ENV === 'production') ? undefined : false }));
 app.use(cors())
 app.use(compression())
 
@@ -59,7 +59,6 @@ oauth(app)
 
 
 const dbUri = `mongodb://localhost:27017/recruit-chain`
-console.log('MONGO URL ')
 
 mongoose.connect(dbUri, {
   useCreateIndex: true,
@@ -85,8 +84,8 @@ const httpServer = createServer(app)
 graphqlServer.installSubscriptionHandlers(httpServer)
 
 const PORT = 3002
+
 httpServer.listen({ port: PORT }, () => {
-  console.log('NODE_ENV', process.env.NODE_ENV)
   console.log(`🚀 Server ready at http://localhost:${PORT}${graphqlServer.graphqlPath}`)
   console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${graphqlServer.subscriptionsPath}`)
 })

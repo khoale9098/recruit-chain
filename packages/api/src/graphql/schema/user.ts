@@ -1,30 +1,31 @@
 import { gql } from 'apollo-server-express'
 
-
 const User = gql`
-  type User {
+  type User{
     _id: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
+    activityLogs: [ActivityLog!]
+
     firstName: String
     lastName: String
     email: String
     phone: String
-    about: String
-    # password: String
-    avatar: String
-    title: String
-    coverImage: String
-    birthday: DateTime
-    address: String
-    following:[User!]
-    connect:[User!]
-    status: UserStatus
-    userType: UserType
-    note: String,
-    language: [String],
-    experience: [Experience]
-    education: [Education]
+        about: String
+        # password: String
+        avatar: String
+        title: String
+        coverImage: String
+        birthday: DateTime
+        address: String
+        following:[User!]
+        connect:[User!]
+        status: UserStatus
+        userType: UserType
+        note: String,
+        language: [String],
+        experience: [Experience]
+        education: [Education]
     website: String,
     companyName: String,
     companyType: String,
@@ -34,10 +35,8 @@ const User = gql`
     foundedDate: Date,
     loginClientIp: String
     searchHistory: [String!]
-    activityLogs: [ActivityLog!]
     isPrivate: Boolean
   }
-
   type ActivityLog {
     _id: String
     place: String
@@ -47,28 +46,28 @@ const User = gql`
     activatedAt: DateTime
     clientIp: String
   }
-
-  type UserPagination {
-    docs: [User]
-    totalDocs: Int
-    limit: Int
-    page: Int
-    totalPages: Int
+  type Geometry {
+    x: Float!
+    y: Float!
   }
-
   enum UserStatus {
     active
     deleted
   }
+
   enum UserType {
     employee
     employer
   }
 
-  extend type Query [
+  extend type Query {
     user(id: ID): User
     getUser(username: String): User
-  ]
-
+    getUserList(type: UserType = any, filter: FilterUser, limit: Int, offset: Int): [User!]
+  }
+  
+  input FilterUser {
+    search: String
+  }
 `
 export default User

@@ -14,11 +14,12 @@ declare module 'express' {
 }
 
 const ipMiddleware = function (req: Request, res: Response, next: NextFunction) {
-  if (config.ENV === ENV.DEVELOPMENT) {
-    req.clientIp = '118.69.55.211'
-  } else {
-    req.clientIp = requestIp.getClientIp(req)
-  }
+  // if (config.ENV === ENV.DEVELOPMENT) {
+  //   req.clientIp = '118.69.55.211'
+  // } else {
+  //   req.clientIp = requestIp.getClientIp(req)
+  // }
+  req.clientIp = '118.69.55.211'
   next()
 }
 

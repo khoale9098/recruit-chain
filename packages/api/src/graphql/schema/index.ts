@@ -1,6 +1,9 @@
 import { gql } from 'apollo-server-express'
 import userSchema from './user'
 import jobSchema from './job'
+import experienceSchema from './experience'
+import educationSchema from './education'
+
 
 const linkSchema = gql`
   scalar Date
@@ -31,6 +34,8 @@ const linkSchema = gql`
 `
 export default [
   linkSchema,
-  // userSchema,
+  userSchema,
+  experienceSchema,
+  educationSchema,
   jobSchema,
 ]
