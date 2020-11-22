@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
+    "@apollo/client": "^3.2.7",
     "@next/bundle-analyzer": "^9.5.5",
     "antd": "^4.7.3",
     "apollo-link-http": "^1.5.17",

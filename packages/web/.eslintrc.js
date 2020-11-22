@@ -21,6 +21,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
     'react/prop-types': 'warn',
+    'no-underscore-dangle': 0,
     'react/jsx-filename-extension': 'off',
     'import/no-unresolved': 'off',
     'react/jsx-uses-react': 'error',

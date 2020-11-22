@@ -41,17 +41,27 @@ const post = async (url, json) => {
 
 export const login = async (json) => {
   const response = post('auth/login', json)
-  if (response?.token) {
-    setToken(response.token)
-  }
   return response
 }
 
 export const register = async (json) => {
   const response = post('auth/register', json)
-
-  if (response?.token) {
-    setToken(response.token)
-  }
   return response
+}
+
+export const logout = (customBackLink) => {
+  // TODO: call logout backend
+  destroyCookie(null, 'recoil_persistence', {
+    path: '/',
+  })
+
+  if (typeof window !== 'undefined') {
+    if (window.FB) {
+      window.FB.logout()
+    }
+  }
+  // TODO: need to reset recoil store, but can not use hook outside component, so for now force reload
+  setTimeout(() => {
+    window.location.replace(customBackLink || '/')
+  }, 500)
 }
