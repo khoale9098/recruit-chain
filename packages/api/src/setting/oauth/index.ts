@@ -7,17 +7,14 @@ import { userService } from '../../services'
 const oauth = (app: Application) => {
   app.post('/auth/register', async (req: Request, res: Response) => {
     try {
-      const { email, firstName, lastName, password, username } = req.body
+      const { username, password } = req.body
 
       let user = await userService.getOne({ cond: { username } })
       if (user) {
         throw new Error('INVALID_USER')
       }
       user = await userService.signUp({
-        email,
-        username,
-        firstName,
-        lastName,
+        ...req.body,
         password: User.generateHash(password)
       } as any)
 

@@ -44,7 +44,6 @@ const schema = new Schema({
     default: USER.USER_TYPE.EMPLOYEE
   },
   note: String,
-  language: [String],
   // skill: [{
   //   type: Schema.Types.ObjectId,
   //   ref: 'skill'

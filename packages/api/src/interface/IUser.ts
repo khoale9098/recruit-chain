@@ -15,7 +15,6 @@ interface IUser extends Document {
   gender?: string,
   loginClientIp: string,
   note?: string,
-  language?: string,
   following?: Types.ObjectId[] | IUser[],
   connect?: Types.ObjectId[] | IUser[]
   searchHistory?: string[]

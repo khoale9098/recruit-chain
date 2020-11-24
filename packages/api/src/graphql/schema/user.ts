@@ -6,26 +6,24 @@ const User = gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     activityLogs: [ActivityLog!]
-
     firstName: String
     lastName: String
     email: String
     phone: String
-        about: String
-        # password: String
-        avatar: String
-        title: String
-        coverImage: String
-        birthday: DateTime
-        address: String
-        following:[User!]
-        connect:[User!]
-        status: UserStatus
-        userType: UserType
-        note: String,
-        language: [String],
-        experience: [Experience]
-        education: [Education]
+    about: String
+     # password: String
+     avatar: String
+     title: String
+    coverImage: String
+    birthday: DateTime
+    address: String
+    following:[User!]
+    connect:[User!]
+    status: UserStatus
+    userType: UserType
+    note: String,
+    experience: [Experience]
+    education: [Education]
     website: String,
     companyName: String,
     companyType: String,
