@@ -4,7 +4,14 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
 
-import { FormOutlined, AppstoreOutlined, SyncOutlined, ProjectOutlined, BarChartOutlined } from '@ant-design/icons'
+import {
+  FormOutlined,
+  AppstoreOutlined,
+  SyncOutlined,
+  ProjectOutlined,
+  BarChartOutlined,
+  DesktopOutlined,
+} from '@ant-design/icons'
 import OnlineUser from 'components/OnlineUser'
 
 const Logo = () => {
@@ -18,11 +25,12 @@ const Logo = () => {
     </Link>
   )
 }
-const SliderLayout = ({ collapsed }) => {
+
+const SliderLayout = ({ collapsed, isEmployee = false }) => {
   const router = useRouter()
   const { asPath } = router
 
-  const menu = [
+  const menuEmployee = [
     {
       name: 'Profile',
       href: '/profile',
@@ -50,11 +58,36 @@ const SliderLayout = ({ collapsed }) => {
     },
   ]
 
+  const menuCompany = [
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: <DesktopOutlined />,
+    },
+    {
+      name: 'Profile',
+      href: '/profile',
+      icon: <FormOutlined />,
+    },
+    {
+      name: 'Jobs',
+      href: '/job',
+      icon: <AppstoreOutlined />,
+    },
+    {
+      name: 'Responses',
+      href: '/responses',
+      icon: <SyncOutlined />,
+    },
+  ]
+
+  const menu = isEmployee ? menuEmployee : menuCompany
+
   return (
     <Layout.Sider className="bg-white" trigger={null} collapsible collapsed={collapsed}>
       <Logo />
       <div className="bg-white flex justify-center items-center">
-        <OnlineUser isCollapsed={collapsed} />
+        <OnlineUser isCollapsed={collapsed} isEmployee={isEmployee} />
       </div>
 
       <Menu mode="inline" selectedKeys={asPath} defaultSelectedKeys={['/profile']} className="bg-white">
@@ -76,5 +109,6 @@ const SliderLayout = ({ collapsed }) => {
 
 SliderLayout.propTypes = {
   collapsed: PropTypes.bool.isRequired,
+  isEmployee: PropTypes.bool.isRequired,
 }
 export default SliderLayout

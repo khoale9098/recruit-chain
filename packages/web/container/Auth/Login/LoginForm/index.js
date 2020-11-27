@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Input, Button, message } from 'antd'
 import { login } from 'core/api'
 import { useSetRecoilState } from 'recoil'
-import { authAtoms } from 'store'
+import { authAtoms } from '../../../../store'
 
 const LOGIN_FIELD = {
   EMAIL: 'email',
@@ -22,6 +22,7 @@ const LoginForm = () => {
         user: { userType },
         userId,
       } = response.data
+
       setUserPersist({
         token,
         userId,
@@ -29,7 +30,6 @@ const LoginForm = () => {
       })
       message.success('Login successfuly!')
     } catch (e) {
-      console.log(e)
       // message.error('invalid')
     }
   }

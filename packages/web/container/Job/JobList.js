@@ -1,6 +1,7 @@
 import { List, Card, Button } from 'antd'
+import { useRouter } from 'next/router'
 import { PlusOutlined } from '@ant-design/icons'
-import JobItem from '../JobItem'
+import JobItem from 'components/JobItem'
 
 const data = [
   {
@@ -18,17 +19,22 @@ const data = [
 ]
 
 const JobList = () => {
+  const router = useRouter()
+  const routeToAddJob = () => router.push('/add')
   return (
     <Card
       className="w-full bg-white"
       extra={
         // eslint-disable-next-line react/jsx-wrap-multilines
-        <Button
-          icon={<PlusOutlined />}
-          className="bg-primary flex justify-center items-center text-white border border-solid border-primary rounded px-4"
-        >
-          Add New Job
-        </Button>
+        <div>
+          <Button
+            onClick={() => routeToAddJob()}
+            icon={<PlusOutlined />}
+            className="bg-primary flex justify-center items-center text-white border border-solid border-primary rounded px-4"
+          >
+            Add New Job
+          </Button>
+        </div>
       }
     >
       <div className="px-4 pt-6">

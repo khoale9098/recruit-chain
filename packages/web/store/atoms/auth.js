@@ -11,11 +11,6 @@ export default {
     },
   }),
 
-  registerStep: atom({
-    key: 'atoms_auth_registerStep',
-    default: 0,
-  }),
-
   userPersisted: atom({
     key: 'persist_user_info',
     default: {

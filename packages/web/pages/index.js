@@ -15,6 +15,7 @@ export default function IndexPage() {
   const redirectIfLogged = () => {
     if (token) {
       if (userType === 'employee') router.replace('/profile')
+      if (userType === 'employer') router.replace('/dashboard')
     }
   }
   useEffect(() => {

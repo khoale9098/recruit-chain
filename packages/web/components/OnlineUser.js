@@ -1,8 +1,14 @@
 import { Avatar, Badge } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
+import { useRecoilValue } from 'recoil'
+import { authAtoms } from 'store'
 
-const OnlineUser = ({ isCollapsed }) => {
+const OnlineUser = ({ isCollapsed, isEmployee }) => {
+  const auth = useRecoilValue(authAtoms.auth)
+
+  const name = isEmployee ? auth?.user?.firstName : auth?.user?.companyName
+
   return (
     <div className="flex justify-center items-center my-4 flex-col">
       <span>
@@ -17,8 +23,8 @@ const OnlineUser = ({ isCollapsed }) => {
       </span>
       {!isCollapsed && (
         <>
-          <h3 className="font-bold pt-2 text-base">Khoa Le</h3>
-          <span className="text-gray-500">employee</span>
+          <h3 className="font-bold pt-2 text-base">{name}</h3>
+          <span className="text-gray-500">{isEmployee ? 'employee' : 'employer'}</span>
         </>
       )}
     </div>
@@ -26,6 +32,7 @@ const OnlineUser = ({ isCollapsed }) => {
 }
 
 OnlineUser.propTypes = {
+  isEmployee: PropTypes.bool.isRequired,
   isCollapsed: PropTypes.bool.isRequired,
 }
 

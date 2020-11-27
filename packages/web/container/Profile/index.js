@@ -1,4 +1,5 @@
 import { Avatar } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 import CoverImage from './CoverImage'
 import AboutUser from './AboutUser'
 import AvatarEmployee from './AvatarEmployee'
@@ -35,8 +36,8 @@ const ProfileUI = () => {
                       <Avatar
                         size={32}
                         className="flex-none box-border border-2 border-solid border-transparent rounded"
-                        src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
                         shape
+                        src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
                       />
                       <div className="font-semibold ml-2">HCMC University of Technology and Education</div>
                     </div>
