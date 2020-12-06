@@ -10,6 +10,7 @@ interface IJob extends Document {
   requirement?: string,
   expiredAt?: Date,
   location?: string,
+  vacancies?: number,
   slug?: string,
   status?: number,
   isPin?: boolean,
