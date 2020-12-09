@@ -4,8 +4,8 @@ import { Document, Types } from 'mongoose'
 interface IJob extends Document {
   title?: string,
   company?: Types.ObjectId | IJob,
-  salaryFrom?: number,
-  salaryTo?: number,
+  salaryFrom?: string,
+  salaryTo?: string,
   description?: string,
   requirement?: string,
   expiredAt?: Date,

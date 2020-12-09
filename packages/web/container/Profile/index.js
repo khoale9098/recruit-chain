@@ -1,5 +1,6 @@
 import { Avatar } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
+import { useRecoilValue } from 'recoil'
+import { authAtoms } from 'store'
 import CoverImage from './CoverImage'
 import AboutUser from './AboutUser'
 import AvatarEmployee from './AvatarEmployee'
@@ -9,6 +10,8 @@ import Education from './Education'
 import RightSideContainer from './RightSideContainer'
 
 const ProfileUI = () => {
+  const { userType } = useRecoilValue(authAtoms.userPersisted)
+
   return (
     <>
       <div className="flex bg-white items-center shadow-xs">
@@ -26,7 +29,8 @@ const ProfileUI = () => {
                 </div>
                 <div className="pt-2 flex justify-between">
                   <div>
-                    <div className="font-bold text-2xl">Khoa Le</div>
+                    {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+                    <div className="font-bold text-2xl">{userType === 'employee' ? 'Khoa Le' : 'Nash'} </div>
                     <div className="text-xl">Software Engineer at Agecode Co.Ltd</div>
                     <div>Ho Chi Minh City</div>
                   </div>
@@ -45,9 +49,13 @@ const ProfileUI = () => {
                 </div>
               </div>
             </section>
-            <AboutUser />
-            <Education />
-            <Experience />
+            <AboutUser isEmployee={userType === 'employee'} />
+            {userType === 'employee' && (
+              <>
+                <Education />
+                <Experience />
+              </>
+            )}
           </div>
           <div className="ml-2 w-full" style={{ maxWidth: '380px' }}>
             <RightSideContainer />

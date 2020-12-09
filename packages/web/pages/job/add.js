@@ -1,10 +1,13 @@
 import PageLayout from 'layout/PageLayout'
 import SecurityLayout from 'layout/Security'
+import FormAddJob from 'container/Job/FormAddJob'
 
 const AddJob = () => {
   return (
     <PageLayout>
-      <SecurityLayout employer>{/* <CompanyJobUI /> */}</SecurityLayout>
+      <SecurityLayout employer>
+        <FormAddJob />
+      </SecurityLayout>
     </PageLayout>
   )
 }

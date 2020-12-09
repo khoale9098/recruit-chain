@@ -65,3 +65,8 @@ export const logout = (customBackLink) => {
     window.location.replace(customBackLink || '/')
   }, 500)
 }
+
+export const fetcher = async (...args) => {
+  const res = await fetch(...args)
+  return res.json()
+}

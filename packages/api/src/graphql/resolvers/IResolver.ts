@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql'
 
 import IUser from 'src/interface/IUser'
+import IJob from 'src/interface/IJob'
 
 interface Context {
   me: IUser
@@ -16,3 +17,5 @@ export type Resolver<Result, Parent = any, Args = any> = (
 ) => Promise<Result> | Result
 
 export type UserResolver<R = IUser | IUser[] | null, Parent = never> = Resolver<R, Parent>
+export type JobResolver<R = IJob | IJob[] | null, Parent = never> = Resolver<R, Parent>
+

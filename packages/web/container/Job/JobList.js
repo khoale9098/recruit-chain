@@ -1,26 +1,33 @@
 import { List, Card, Button } from 'antd'
 import { useRouter } from 'next/router'
 import { PlusOutlined } from '@ant-design/icons'
+import { stringify, parse } from 'qs'
+
+import useSWR from 'swr'
+import API from 'core/api/API'
+import { fetcher } from 'core/api'
+
 import JobItem from 'components/JobItem'
 
-const data = [
-  {
-    title: 'Title 1',
-  },
-  {
-    title: 'Title 2',
-  },
-  {
-    title: 'Title 3',
-  },
-  {
-    title: 'Title 4',
-  },
-]
-
 const JobList = () => {
+  let {
+    query: { page = 1, search = {} },
+  } = useRouter()
   const router = useRouter()
-  const routeToAddJob = () => router.push('/add')
+
+  page = Number(page)
+  search = parse(search)
+
+  const { data, isValidating } = useSWR(
+    `${API.JOB.LIST}?${stringify({
+      page,
+      ...search,
+    })}`,
+    fetcher
+  )
+
+  console.log('data L ', data)
+  const routeToAddJob = () => router.push('job/add')
   return (
     <Card
       className="w-full bg-white"
@@ -40,10 +47,11 @@ const JobList = () => {
       <div className="px-4 pt-6">
         <List
           grid={{ gutter: 16, column: 3 }}
-          dataSource={data}
+          dataSource={data?.jobs?.data}
+          loading={isValidating}
           renderItem={(item) => (
             <List.Item>
-              <JobItem />
+              <JobItem item={item} />
             </List.Item>
           )}
         />
