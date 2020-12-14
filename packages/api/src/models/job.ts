@@ -30,6 +30,6 @@ const schema = new Schema({
 )
 
 schema.plugin(mongoosePaginate)
-const JobModel: IPagingModel<IJob> = model<IJob>(modelName, schema) as IPagingModel<IJob>
+const JobPagingModel: IPagingModel<IJob> = model<IJob>(modelName, schema) as IPagingModel<IJob>
 
-export default JobModel
+export default JobPagingModel

@@ -8,6 +8,7 @@ import JobResolver from './job'
 export default {
   Query: {
     ...UserResolver.Query,
+    ...JobResolver.Query
     // ...commonQuery
   },
 

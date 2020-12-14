@@ -17,5 +17,5 @@ export type Resolver<Result, Parent = any, Args = any> = (
 ) => Promise<Result> | Result
 
 export type UserResolver<R = IUser | IUser[] | null, Parent = never> = Resolver<R, Parent>
-export type JobResolver<R = IJob | IJob[] | null, Parent = never> = Resolver<R, Parent>
 
+export type JobResolver<R = IJob | IJob[] | null | Boolean, Parent = never> = Resolver<R, Parent>

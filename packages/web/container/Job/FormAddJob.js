@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Card, Button, Form } from 'antd'
+import { Card, Button, Form, message } from 'antd'
 import { gql, useMutation } from '@apollo/client'
 import dynamic from 'next/dynamic'
 import { pickBy, identity } from 'lodash'
@@ -20,7 +20,15 @@ const CREATE_JOB = gql`
 
 const FormAddJob = () => {
   const [form] = Form.useForm()
-  const [addJob] = useMutation(CREATE_JOB)
+  const [addJob] = useMutation(CREATE_JOB, {
+    onCompleted() {
+      message.success('Add job successful!')
+    },
+    onError() {
+      message.error('Add job error!')
+    },
+  })
+
   const [requirment, setRequirment] = useState(EditorState.createEmpty())
   const [description, setDescription] = useState(EditorState.createEmpty())
   const [benefit, setBenefit] = useState(EditorState.createEmpty())

@@ -26,7 +26,25 @@ const Job = gql`
   extend type Mutation {
     createJob(jobInput: JobInput!): Job
   }
+  extend type Query{
+    job(id: ID!): Job
+    getJobList(
+      filter: FilterJob
+      paging: PagingInput = { limit: 20, page: 1 }
+      ): JobPagination
+  }
 
+  input FilterJob {
+    name: String
+  }
+
+  type JobPagination {
+    docs: [Job]
+    totalDocs: Int
+    limit: Int
+    page: Int
+    totalPages: Int
+  }
 
   input JobInput{
     title: String!
@@ -46,6 +64,7 @@ const Job = gql`
     keyword: String
   }
 `
+
 
 
 export default Job
