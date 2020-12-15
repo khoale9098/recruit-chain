@@ -4,7 +4,7 @@ const Job = gql`
   type Job{
     _id: ID!
     title: String
-    company: [User!]
+    company: User!
     salaryFrom: String
     salaryTo: String
     description: String
@@ -18,6 +18,7 @@ const Job = gql`
     isPin: Boolean
     category: String
     keyword: String
+    tokenBonus: Int!
     createdAt: DateTime!
     updatedAt: DateTime!
   }
@@ -25,6 +26,8 @@ const Job = gql`
 
   extend type Mutation {
     createJob(jobInput: JobInput!): Job
+    updateJob(id: ID!, jobInput:JobInput!): Job
+    deleteJob(id: ID!): Job
   }
   extend type Query{
     job(id: ID!): Job

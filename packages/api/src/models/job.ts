@@ -12,6 +12,11 @@ const schema = new Schema({
     ref: 'user',
     required: true,
   },
+  tokenBonus: {
+    type: Number,
+    required: true,
+    default: 100000
+  },
   salaryFrom: String,
   salaryTo: String,
   description: String,

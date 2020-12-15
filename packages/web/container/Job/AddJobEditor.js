@@ -4,7 +4,7 @@ import { convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import draftToHtml from 'draftjs-to-html'
 
-const AddJobEditor = ({ requirment, description, benefit, setRequirment, setDescription, setBenefit }) => {
+const AddJobEditor = ({ requirement, description, benefit, setRequirment, setDescription, setBenefit }) => {
   const onEditorRequirment = (editorState) => {
     setRequirment(editorState)
   }
@@ -25,6 +25,7 @@ const AddJobEditor = ({ requirment, description, benefit, setRequirment, setDesc
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
           onEditorStateChange={onEditorRequirment}
+          // initialContentState={requirement}
         />
       </div>
       {/* Description  */}

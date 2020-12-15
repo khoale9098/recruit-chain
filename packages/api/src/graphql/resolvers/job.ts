@@ -14,13 +14,21 @@ interface JobQuery {
 
 interface JobMutation {
   createJob: JobResolver
-  // deleteJob: JobResolver
-  // editJob: JobResolver
+  updateJob: JobResolver
+  deleteJob: JobResolver
 }
 const Query: JobQuery = {
   job: async (_parent, { id }, { me }) => {
     try {
-      const job = await (await Job.findById(id)).populated('user');
+      const job = await Job.findById(id).populate([
+        {
+          path: 'company',
+          populate: [
+            { path: 'user', model: 'user' },
+          ],
+        },
+      ])
+      console.log('JOB: ', job)
       return job
     }
     catch (e) {
@@ -43,7 +51,23 @@ const Mutation: JobMutation = {
   createJob: async (_parent, { jobInput }, { me }) => {
     const job = await Job.create({ ...jobInput, company: me._id })
     return job;
+  },
+
+  updateJob: async (_parent, { jobInput, id }, { me }) => {
+    try {
+      const job = await Job.findOneAndUpdate({ company: me._id, _id: id }, jobInput, { new: true })
+      return job
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  },
+
+  deleteJob: async (_parent, { id }, { me }) => {
+    const deleteJob = await Job.findOneAndDelete({ company: me._id, _id: id })
+    return deleteJob
   }
+
 }
 
 export default { Mutation, Query }

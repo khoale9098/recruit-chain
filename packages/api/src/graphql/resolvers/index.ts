@@ -13,7 +13,8 @@ export default {
   },
 
   Mutation: {
-    ...JobResolver.Mutation
+    ...JobResolver.Mutation,
+    ...UserResolver.Mutation
   },
 
   Date: GraphQLDate,

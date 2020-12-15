@@ -29,10 +29,10 @@ class JobService extends BaseService<IJob>{
             page: paging.page,
           }
           : {}),
+        populate: 'user company',
         sort: {
           createdAt: -1,
         },
-        populate: 'user',
       }
       const result = await Job.paginate(filterGenarate, options)
       return result as IPaginateResult<IJob>

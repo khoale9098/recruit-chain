@@ -16,6 +16,7 @@ interface IJob extends Document {
   isPin?: boolean,
   category?: string,
   keyword?: string,
+  tokenBonus?: number
 }
 
 export default IJob

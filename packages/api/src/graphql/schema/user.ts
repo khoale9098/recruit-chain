@@ -11,9 +11,8 @@ const User = gql`
     email: String
     phone: String
     about: String
-     # password: String
-     avatar: String
-     title: String
+    avatar: String
+    title: String
     coverImage: String
     birthday: DateTime
     address: String
@@ -35,6 +34,7 @@ const User = gql`
     searchHistory: [String!]
     isPrivate: Boolean
   }
+
   type ActivityLog {
     _id: String
     place: String
@@ -48,6 +48,7 @@ const User = gql`
     x: Float!
     y: Float!
   }
+
   enum UserStatus {
     active
     deleted
@@ -64,6 +65,18 @@ const User = gql`
     getUserList(type: UserType = any, filter: FilterUser, limit: Int, offset: Int): [User!]
   }
   
+  extend type Mutation {
+    updateUser(userInput: UserInput): User
+  }
+
+
+  input UserInput {
+    email: String
+    phone: String
+    password: String
+    avatar: String
+  }
+
   input FilterUser {
     search: String
   }

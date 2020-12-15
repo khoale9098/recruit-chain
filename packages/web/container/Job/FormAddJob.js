@@ -3,6 +3,7 @@ import { Card, Button, Form, message } from 'antd'
 import { gql, useMutation } from '@apollo/client'
 import dynamic from 'next/dynamic'
 import { pickBy, identity } from 'lodash'
+import PropTypes from 'prop-types'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 
@@ -18,7 +19,7 @@ const CREATE_JOB = gql`
   }
 `
 
-const FormAddJob = () => {
+const FormAddJob = ({ isEdit, job }) => {
   const [form] = Form.useForm()
   const [addJob] = useMutation(CREATE_JOB, {
     onCompleted() {
@@ -29,19 +30,19 @@ const FormAddJob = () => {
     },
   })
 
-  const [requirment, setRequirment] = useState(EditorState.createEmpty())
+  const [requirement, setRequirment] = useState(EditorState.createEmpty())
   const [description, setDescription] = useState(EditorState.createEmpty())
   const [benefit, setBenefit] = useState(EditorState.createEmpty())
 
   const handleAddEdit = async (values) => {
-    const requirmentValue = requirment ? draftToHtml(convertToRaw(requirment.getCurrentContent())) : ''
+    const requirmentValue = requirement ? draftToHtml(convertToRaw(requirement.getCurrentContent())) : ''
     const descriptionValue = description ? draftToHtml(convertToRaw(description.getCurrentContent())) : ''
     const benefitValue = benefit ? draftToHtml(convertToRaw(benefit.getCurrentContent())) : ''
 
     const input = {
       title: values.title,
       location: values.location,
-      category: values.category ? JSON.stringify({ ...values.category }) : '',
+      category: values.category ? JSON.stringify(values.category) : '',
       expiredAt: values.expiredAt,
       salaryFrom: values.salaryFrom,
       salaryTo: values.salaryTo,
@@ -60,19 +61,30 @@ const FormAddJob = () => {
     })
   }
 
+  const _renderButton = () => (
+    <Button htmlType="submit" className="text-white bg-primary rounded-sm px-4">
+      {isEdit ? 'Edit Job' : '   Add Job'}
+    </Button>
+  )
+
   return (
-    <Form form={form} onFinish={handleAddEdit} validateTrigger={false}>
-      <Card
-        extra={
-          // eslint-disable-next-line react/jsx-wrap-multilines
-          <Button htmlType="submit" className="text-white bg-primary rounded-sm px-4">
-            Add Job
-          </Button>
-        }
-      >
+    <Form
+      form={form}
+      onFinish={handleAddEdit}
+      validateTrigger={false}
+      initialValues={{
+        title: job?.title || '',
+        salaryFrom: job?.salaryFrom || '',
+        salaryTo: job?.salaryTo || '',
+        location: job?.location || '',
+        vacancies: job?.vacancies || '',
+        category: (job?.category && JSON.parse(job?.category)) || [],
+      }}
+    >
+      <Card extra={_renderButton()}>
         <FormAddEdit />
         <AddJobEditor
-          requirment={requirment}
+          requirement={job?.requirement || EditorState.createEmpty()}
           description={description}
           benefit={benefit}
           setRequirment={setRequirment}
@@ -84,4 +96,8 @@ const FormAddJob = () => {
   )
 }
 
+FormAddJob.propTypes = {
+  isEdit: PropTypes.bool,
+  job: PropTypes.objectOf(PropTypes.any),
+}
 export default FormAddJob

@@ -6,7 +6,7 @@ const AddJob = () => {
   return (
     <PageLayout>
       <SecurityLayout employer>
-        <FormAddJob />
+        <FormAddJob isEdit={false} />
       </SecurityLayout>
     </PageLayout>
   )

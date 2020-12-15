@@ -18,6 +18,11 @@ interface UserQuery {
   getUser: UserResolver,
   getUserList: UserResolver
 }
+
+interface UserMutation {
+  updateUser: UserResolver
+}
+
 const Query: UserQuery = {
   user: async (_parent, { id }, { me }) => {
     try {
@@ -48,4 +53,30 @@ const Query: UserQuery = {
   ),
 }
 
-export default { Query }
+
+const Mutation: UserMutation = {
+  updateUser: combineResolvers(isAuthenticated, async (_parent, { userInput }, { me }) => {
+    try {
+      if (userInput.password) {
+        userInput.password = bcrypt.hashSync(userInput.password, bcrypt.genSaltSync(10))
+      }
+      // check if email have already existed
+      if (userInput.email) {
+        const user = await User.findOne({ username: userInput.username })
+        if (user && user._id.toString() !== me._id.toString()) throw new Error('INVALID_USER')
+      }
+      // check if phone have already existed
+      if (userInput.phone) {
+        const user = await User.findOne({ phone: userInput.phone })
+        if (user && user._id.toString() !== me._id.toString()) throw new Error('INVALID_USER')
+      }
+      const updatedUser = await User.findOneAndUpdate({ _id: me._id }, userInput, { new: true })
+      return updatedUser
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }),
+}
+
+export default { Query, Mutation }
