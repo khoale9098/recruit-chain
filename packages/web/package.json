@@ -15,9 +15,13 @@
     "antd": "^4.7.3",
     "apollo-link-http": "^1.5.17",
     "dayjs": "^1.9.4",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "graphql": "^15.4.0",
+    "html-to-draftjs": "^1.5.0",
     "ky": "^0.25.0",
     "ky-universal": "^0.8.2",
+    "lodash": "^4.17.20",
     "next": "^10.0.1",
     "nookies": "^2.5.0",
     "nprogress": "^0.2.0",
@@ -26,7 +30,9 @@
     "rc-tween-one": "^2.7.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "recoil": "^0.1.2"
+    "react-draft-wysiwyg": "^1.14.5",
+    "recoil": "^0.1.2",
+    "swr": "^0.3.9"
   },
   "devDependencies": {
     "@emeks/antd-custom-theme-generator": "^0.1.6",

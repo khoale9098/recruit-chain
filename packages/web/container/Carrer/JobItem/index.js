@@ -3,7 +3,10 @@ import { Tag, Button } from 'antd'
 const JobItem = () => {
   return (
     <div className="w-full relative mb-5">
-      <div className="flex  h-full rounded-sm px-5 py-4 border border-solid" style={{ borderColor: '#e3e3e3' }}>
+      <div
+        className="flex  h-full rounded-sm px-5 py-4 border border-solid"
+        style={{ borderColor: '#e3e3e3', minHeight: '200px' }}
+      >
         <div className="w-16">
           <img src="https://static.recruitery.co/uploads/images/c2a4be8f932c4ded85312e7889bb7662_20201016170539.jpg" alt="" />
         </div>

@@ -17,13 +17,17 @@ const OnlineUser = ({ isCollapsed, isEmployee }) => {
             size={64}
             className="flex justify-center items-center object-cover"
             icon={<UserOutlined />}
-            src="/img/profile.jpg"
+            src={
+              isEmployee
+                ? '/img/profile.jpg'
+                : 'https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/c234e48241988f87db7f7eb7d207d507.png'
+            }
           />
         </Badge>
       </span>
       {!isCollapsed && (
         <>
-          <h3 className="font-bold pt-2 text-base">{name}</h3>
+          <h3 className="font-bold pt-2 text-base">{isEmployee ? name : 'Nash'}</h3>
           <span className="text-gray-500">{isEmployee ? 'employee' : 'employer'}</span>
         </>
       )}

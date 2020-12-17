@@ -124,6 +124,34 @@ class UserService extends BaseService<IUser> {
     const randomUser = await User.findOne().skip(rand)
     return randomUser
   }
+  async updateFollowerCount(userId: Types.ObjectId) {
+    try {
+      const followerNo = await User.countDocuments({ following: userId })
+      await User.findByIdAndUpdate(userId, { followerCount: followerNo })
+      return true
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+
+  // async followUser(userId: Types.ObjectId, me: IUser, action: string) {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const updatedUser = await this.model.findByIdAndUpdate(
+  //         me._id,
+  //         action === 'add' ? { $addToSet: { following: userId } } : { $pull: { following: userId } },
+  //         { new: true }
+  //       )
+  //       this.updateFollowerCount(userId)
+  //       await notificationService.generateFollowedNoti(action, me, userId)
+  //       return resolve(updatedUser)
+  //     } catch (err) {
+  //       console.log(err)
+  //       return reject(err)
+  //     }
+  //   })
+  // }
 }
 
 

@@ -6,6 +6,7 @@ import { useApollo } from 'core/apollo'
 import { setToken } from 'core/api'
 
 import 'styles/styles.css'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 function MyApp({ Component, pageProps }) {
   const apolloClient = useApollo(pageProps.initialApolloState, pageProps.serverCookie)

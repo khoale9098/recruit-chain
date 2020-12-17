@@ -1,7 +1,6 @@
 import colors from 'colors/safe'
 import { NextFunction, Request, Response } from 'express'
 import requestIp from 'request-ip'
-
 import { ENV } from '../setting/constants'
 import config from '../setting/env'
 import { authenticate } from './oauth/helper'

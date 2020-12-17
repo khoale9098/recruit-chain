@@ -12,12 +12,19 @@ const schema = new Schema({
     ref: 'user',
     required: true,
   },
-  salaryFrom: Number,
-  salaryTo: Number,
+  tokenBonus: {
+    type: Number,
+    required: true,
+    default: 100000
+  },
+  salaryFrom: String,
+  salaryTo: String,
   description: String,
   requirement: String,
+  benefit: String,
   expiredAt: Date,
   location: String,
+  vacancies: Number, //Số lượng tuyển dụng
   slug: String,
   status: Number,
   isPin: Boolean,
@@ -28,6 +35,6 @@ const schema = new Schema({
 )
 
 schema.plugin(mongoosePaginate)
-const JobModel: IPagingModel<IJob> = model<IJob>(modelName, schema) as IPagingModel<IJob>
+const JobPagingModel: IPagingModel<IJob> = model<IJob>(modelName, schema) as IPagingModel<IJob>
 
-export default JobModel
+export default JobPagingModel
