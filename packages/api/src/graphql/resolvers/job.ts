@@ -10,6 +10,7 @@ import { Job } from '../../models'
 interface JobQuery {
   job: JobResolver
   getJobList: JobResolver
+  getJobsById: JobResolver
 }
 
 interface JobMutation {
@@ -36,7 +37,7 @@ const Query: JobQuery = {
     }
   },
 
-  getJobList: combineResolvers(isAuthenticated, async (_parent, { filter, paging }, { me }) => {
+  getJobList: combineResolvers(isAuthenticated, async (_parent, { filter, paging }) => {
     try {
       const result = await jobService.getJobList(filter, paging)
       return result
@@ -44,7 +45,22 @@ const Query: JobQuery = {
       throw error
     }
   }),
+  getJobsById: combineResolvers(isAuthenticated, async (_parent, { filter, paging }, { me }) => {
+    try {
+      const conditions = { company: me._id }
+      const options = {
+        lean: true,
+        page: paging.page,
+        limit: paging.limit,
+        populate: 'user company',
+      }
+      const result = await Job.paginate(conditions, options)
+      return result
 
+    } catch (error) {
+      throw error
+    }
+  }),
 
 }
 const Mutation: JobMutation = {

@@ -1,15 +1,15 @@
 import PageLayout from 'layout/PageLayout'
-import CarrerUI from 'container/Carrer'
 import Security from 'layout/Security'
+import JobDetail from 'container/JobDetail'
 
-const Carrers = () => {
+const JobCarrers = () => {
   return (
     <Security>
       <PageLayout>
-        <CarrerUI />
+        <JobDetail />
       </PageLayout>
     </Security>
   )
 }
 
-export default Carrers
+export default JobCarrers

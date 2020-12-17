@@ -2,6 +2,7 @@ import PageLayout from 'layout/PageLayout'
 import { useQuery, gql } from '@apollo/client'
 import SecurityLayout from 'layout/Security'
 import FormAddJob from 'container/Job/FormAddJob'
+import { useRouter } from 'next/router'
 
 const JOB = gql`
   query job($id: ID!) {
@@ -29,9 +30,13 @@ const JOB = gql`
   }
 `
 const Jobs = () => {
+  const {
+    query: { id },
+  } = useRouter()
+
   const { data, loading } = useQuery(JOB, {
     variables: {
-      id: '5fd83f38a1c72e12b42d48e4',
+      id,
     },
   })
   if (loading) return 'loading'

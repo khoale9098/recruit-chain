@@ -63,10 +63,15 @@ const User = gql`
     user(id: ID): User
     getUser(username: String): User
     getUserList(type: UserType = any, filter: FilterUser, limit: Int, offset: Int): [User!]
+    currentUser: User
   }
   
   extend type Mutation {
     updateUser(userInput: UserInput): User
+    clearSearchHistory: User
+    clearToken(id: String!): Boolean
+    changePassword(oldPassword: String, newPassword: String): Boolean
+    # connectUser(id: ID!, action: ActionEnum = add): User
   }
 
 
@@ -74,6 +79,10 @@ const User = gql`
     email: String
     phone: String
     password: String
+    about: String
+    companyName: String
+    coverImage: String
+    title: String
     avatar: String
   }
 

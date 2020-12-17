@@ -1,19 +1,47 @@
+/* eslint-disable react/no-danger */
 import React from 'react'
-import { Card } from 'antd'
+import { useQuery, gql } from '@apollo/client'
+import { Card, Spin, Button } from 'antd'
+import { useRouter } from 'next/router'
+import { SendOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 
+const JOB = gql`
+  query job($id: ID!) {
+    job(id: $id) {
+      _id
+      createdAt
+      updatedAt
+      company {
+        _id
+        avatar
+        companyName
+      }
+      requirement
+      benefit
+      tokenBonus
+      title
+      salaryFrom
+      salaryTo
+      location
+      vacancies
+      description
+      expiredAt
+      category
+    }
+  }
+`
 const BoxJobContent = ({ title, content }) => {
   const createContent = (htmlContent) => {
     return { __html: htmlContent }
   }
   return (
     <article className="box-job ">
-      <div className="p-10 m-xs:p-6">
+      <div className="px-10 m-xs:p-6">
         <div>
-          <h2 className="uppercase font-bold text-2xl pb-3">{title}</h2>
+          <h2 className="uppercase font-bold text-base pb-3">{title}</h2>
           <div className="w-64" style={{ borderBottom: '0.5px solid rgba(229, 229, 229, 0.8)' }} />
-          <div className="text-base leading-7 pt-3 font-normal">
-            {/* eslint-disable-next-line react/no-danger */}
+          <div className="text-sm leading-7 pt-3 font-normal">
             <div dangerouslySetInnerHTML={createContent(content)} id="box-content" />
           </div>
         </div>
@@ -24,25 +52,68 @@ const BoxJobContent = ({ title, content }) => {
 
 BoxJobContent.propTypes = {
   title: PropTypes.string.isRequired,
+  content: PropTypes.node,
 }
 
-const JobDetail = ({ data }) => {
+const JobDetail = () => {
+  const {
+    query: { id },
+  } = useRouter()
+
+  const { data, loading } = useQuery(JOB, {
+    variables: {
+      id,
+    },
+  })
+
+  if (loading) {
+    return (
+      <div className="w-full flex justify-center">
+        <Spin />
+      </div>
+    )
+  }
+
+  const renderApply = () => {
+    return (
+      <div className="flex">
+        <Button
+          className="bg-primary hover:bg-primary focus:bg-primary rounded outline-none focus:outline-none w-full h"
+          style={{ height: '48px' }}
+        >
+          <div className="flex flex-row px-6 items-center mx-2">
+            <div className="w-8 h-8 ">
+              <img src="https://agecodehr.com/img/icons/approved.svg" alt="" />
+            </div>
+            <div className="text-white uppercase px-3">Apply</div>
+          </div>
+        </Button>
+        <Button
+          className="mx-4 border-primary uppercase text-primary rounded outline-none focus:outline-none w-full"
+          style={{ height: '48px' }}
+        >
+          <SendOutlined className="text-xl" />
+          Share
+        </Button>
+      </div>
+    )
+  }
   return (
-    <Card>
-      <div className="flex mt-6 m-md:flex-col m-xs:mx-4">
-        <div className="w-full m-md:w-full pr-4 m-md:pr-0 m-md:m-auto" style={{ maxWidth: '732px' }}>
+    <Card title={<h3 className="text-lg font-bold">{data?.job?.title}</h3>} extra={renderApply()}>
+      <div className="flex  m-md:flex-col m-xs:mx-4">
+        <div className="w-full m-md:w-full pr-4 m-md:pr-0 m-md:m-auto">
           <div>
             <div className="pt-0">
-              <BoxJobContent title="Mô tả công việc" content={data?.description} />
+              <BoxJobContent title="Description" content={data?.job?.description} />
             </div>
-            {data?.requirement && (
-              <div className="pt-12">
-                <BoxJobContent title="Yêu cầu công việc" content={data?.requirement} />
+            {data?.job?.requirement && (
+              <div className="mt-12">
+                <BoxJobContent title="Requirment Skill and Experience" content={data?.job?.requirement} />
               </div>
             )}
-            {data?.benefit && (
-              <div className="pt-12">
-                <BoxJobContent title="Chế độ phúc lợi" content={data?.benefit} />
+            {data?.job?.benefit && (
+              <div className="mt-12">
+                <BoxJobContent title="Benefit" content={data?.job?.benefit} />
               </div>
             )}
           </div>

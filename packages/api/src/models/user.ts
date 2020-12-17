@@ -30,7 +30,7 @@ const schema = new Schema({
   coverImage: String, //Ảnh bìa
   birthday: Date,
   address: String,
-  following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  // following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   connect: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   gender: {
     type: String,

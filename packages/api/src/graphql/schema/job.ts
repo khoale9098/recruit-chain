@@ -34,7 +34,11 @@ const Job = gql`
     getJobList(
       filter: FilterJob
       paging: PagingInput = { limit: 20, page: 1 }
-      ): JobPagination
+    ): JobPagination
+    getJobsById(
+      filter: FilterJob
+      paging: PagingInput = { limit: 20, page: 1 }
+    ): JobPagination
   }
 
   input FilterJob {
