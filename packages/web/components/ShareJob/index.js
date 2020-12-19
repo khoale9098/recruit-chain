@@ -6,20 +6,19 @@ import { FacebookOutlined, LinkedinOutlined, RedditOutlined, PaperClipOutlined }
 import { copyToClipboard } from 'utils'
 
 const ShareJob = ({ show, cancel, userId, idJob }) => {
-  const copyLinkToClipboard = (value) => {
-    copyToClipboard(value)
+  const copyLinkToClipboard = () => {
+    const linkToJob = `http://localhost:3000/carrers/${idJob}?sharing=${userId}`
+    copyToClipboard(linkToJob)
     message.success('Copy to clipboard!')
   }
+
   return (
     <Modal title="Share" footer={null} visible={show} onCancel={cancel}>
       <div className="flex">
         <FacebookOutlined className="text-6xl mx-4 hover:text-blue-700 cursor-pointer" />
         <LinkedinOutlined className="text-6xl  mx-4 hover:text-blue-700 cursor-pointer" />
         <RedditOutlined className="text-6xl  mx-4 hover:text-blue-700 cursor-pointer" />
-        <PaperClipOutlined
-          className="text-6xl mx-4 hover:text-blue-700 cursor-pointer"
-          onClick={() => copyLinkToClipboard('hiihihihihiihihihihi')}
-        />
+        <PaperClipOutlined className="text-6xl mx-4 hover:text-blue-700 cursor-pointer" onClick={() => copyLinkToClipboard()} />
       </div>
     </Modal>
   )
@@ -28,5 +27,7 @@ const ShareJob = ({ show, cancel, userId, idJob }) => {
 ShareJob.propTypes = {
   show: PropTypes.bool,
   cancel: PropTypes.func,
+  userId: PropTypes.string,
+  idJob: PropTypes.string,
 }
 export default ShareJob

@@ -10,7 +10,7 @@ import ShareJob from 'components/ShareJob'
 const JobItem = ({ item }) => {
   const [showShare, setShowShare] = useState(false)
 
-  const { userType } = useRecoilValue(authAtoms.userPersisted)
+  const { userType, userId } = useRecoilValue(authAtoms.userPersisted)
   return (
     <div
       className="flex  h-full rounded-sm px-5 py-4 border border-solid"
@@ -49,7 +49,7 @@ const JobItem = ({ item }) => {
           )}
         </div>
       </div>
-      {showShare && <ShareJob show={showShare} cancel={() => setShowShare(false)} />}
+      {showShare && <ShareJob show={showShare} cancel={() => setShowShare(false)} userId={userId} idJob={item?._id} />}
     </div>
   )
 }

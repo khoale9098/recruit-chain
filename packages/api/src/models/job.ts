@@ -3,7 +3,6 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 import IJob from 'src/interface/IJob'
 import { IPagingModel } from '../interface/IPaging'
 
-
 const modelName = 'job'
 const schema = new Schema({
   title: String,
@@ -12,6 +11,10 @@ const schema = new Schema({
     ref: 'user',
     required: true,
   },
+  applicant: [{
+    type: Schema.Types.ObjectId,
+    ref: 'applicant',
+  }],
   tokenBonus: {
     type: Number,
     required: true,

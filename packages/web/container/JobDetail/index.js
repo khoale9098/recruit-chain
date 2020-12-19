@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 import React from 'react'
-import { useQuery, gql } from '@apollo/client'
-import { Card, Spin, Button } from 'antd'
+import { useQuery, gql, useMutation } from '@apollo/client'
+import { Card, Spin, Modal, Button } from 'antd'
 import { useRouter } from 'next/router'
 import { SendOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
@@ -28,6 +28,14 @@ const JOB = gql`
       description
       expiredAt
       category
+    }
+  }
+`
+
+const APPLY_JOB = gql`
+  mutation applyJob($jobId: ID!) {
+    applyJob(jobId: $jobId) {
+      _id
     }
   }
 `
@@ -66,6 +74,13 @@ const JobDetail = () => {
     },
   })
 
+  const [submitApplyJob] = useMutation(APPLY_JOB, {
+    variables: { jobId: id },
+    onCompleted() {
+      console.log('sdsd')
+    },
+  })
+
   if (loading) {
     return (
       <div className="w-full flex justify-center">
@@ -74,12 +89,24 @@ const JobDetail = () => {
     )
   }
 
+  const applyJob = () => {
+    Modal.confirm({
+      title: 'Share your profile?',
+      okText: 'Apply',
+      content: <div>Thông tin cá nhân</div>,
+      cancelText: 'Cancel',
+      onOk: () => {
+        submitApplyJob()
+      },
+    })
+  }
   const renderApply = () => {
     return (
       <div className="flex">
         <Button
           className="bg-primary hover:bg-primary focus:bg-primary rounded outline-none focus:outline-none w-full h"
           style={{ height: '48px' }}
+          onClick={() => applyJob()}
         >
           <div className="flex flex-row px-6 items-center mx-2">
             <div className="w-8 h-8 ">

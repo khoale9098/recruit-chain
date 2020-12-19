@@ -1,18 +1,16 @@
 import { Types } from 'mongoose'
-
 import { IPaginateResult, IPagingInput } from '../interface/IPaging'
-import { Job } from '../models'
+import { Job, Candidate } from '../models'
 import BaseService from './baseService'
 import { encodeWearCharsRegex } from '../interface/helper'
 import IJob from '../interface/IJob'
+import ICandidate from '../interface/ICandidate'
 
 type JobFilter = {
   name: string
   updatedAt: string,
 
 }
-
-
 class JobService extends BaseService<IJob>{
   async getJobList(filter?: JobFilter, paging?: IPagingInput): Promise<IPaginateResult<IJob>> {
     try {
@@ -41,5 +39,6 @@ class JobService extends BaseService<IJob>{
       throw error
     }
   }
+
 }
 export default new JobService(Job)
