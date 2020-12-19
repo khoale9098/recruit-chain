@@ -26,3 +26,15 @@ export const SORT_FOLLOW_OPTION = {
   NEWEST_FIRST: 'NEWEST_FIRST',
   OLDEST_FIRST: 'OLDEST_FIRST',
 }
+
+export const JOB = {
+  APPLY_STATUS: {
+    RESPONSES: 'responses',
+    INTERVIEW_FIRST_ROUND: 'interview1',
+    INTERVIEW_SECOND_ROUND: 'inteview2',
+    OFFER: 'offer',
+    REJECT: 'rejected',
+    WORKING: 'working',
+    ACCEPTED: 'accepted'
+  }
+} as const

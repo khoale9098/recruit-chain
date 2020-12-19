@@ -28,6 +28,7 @@ const Job = gql`
     createJob(jobInput: JobInput!): Job
     updateJob(id: ID!, jobInput:JobInput!): Job
     deleteJob(id: ID!): Job
+    applyJob(jobId: ID!): Job
   }
   extend type Query{
     job(id: ID!): Job
@@ -71,7 +72,5 @@ const Job = gql`
     keyword: String
   }
 `
-
-
 
 export default Job

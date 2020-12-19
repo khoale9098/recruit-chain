@@ -1,10 +1,7 @@
-import { ApolloError } from 'apollo-server'
-import { Types } from 'mongoose'
 import { isAuthenticated } from './authorization'
 import { combineResolvers } from 'graphql-resolvers'
 import { JobResolver } from './IResolver'
-import { jobService } from '../../services'
-import { conditionForDates, encodeWearCharsRegex, multiSort } from '../../interface/helper'
+import { jobService, candidateService } from '../../services'
 import { Job } from '../../models'
 
 interface JobQuery {
@@ -17,7 +14,9 @@ interface JobMutation {
   createJob: JobResolver
   updateJob: JobResolver
   deleteJob: JobResolver
+  applyJob: JobResolver
 }
+
 const Query: JobQuery = {
   job: async (_parent, { id }, { me }) => {
     try {
@@ -29,7 +28,6 @@ const Query: JobQuery = {
           ],
         },
       ])
-      console.log('JOB: ', job)
       return job
     }
     catch (e) {
@@ -45,6 +43,7 @@ const Query: JobQuery = {
       throw error
     }
   }),
+
   getJobsById: combineResolvers(isAuthenticated, async (_parent, { filter, paging }, { me }) => {
     try {
       const conditions = { company: me._id }
@@ -64,6 +63,7 @@ const Query: JobQuery = {
 
 }
 const Mutation: JobMutation = {
+
   createJob: async (_parent, { jobInput }, { me }) => {
     const job = await Job.create({ ...jobInput, company: me._id })
     return job;
@@ -80,10 +80,30 @@ const Mutation: JobMutation = {
   },
 
   deleteJob: async (_parent, { id }, { me }) => {
-    const deleteJob = await Job.findOneAndDelete({ company: me._id, _id: id })
-    return deleteJob
-  }
+    try {
+      const deleteJob = await Job.findOneAndDelete({ company: me._id, _id: id })
+      return deleteJob
+    }
+    catch (error) {
+      throw error
+    }
+  },
 
+  applyJob: async (_parent, { jobId }, { me }) => {
+    try {
+      const candidate = await candidateService.createCandidate(me)
+      const updateJob = await Job.findByIdAndUpdate(
+        jobId,
+        { $addToSet: { applicant: candidate._id } },
+        { new: true }
+      )
+      return updateJob
+    }
+    catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
 }
 
 export default { Mutation, Query }
