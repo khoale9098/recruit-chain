@@ -3,7 +3,7 @@ import userSchema from './user'
 import jobSchema from './job'
 import experienceSchema from './experience'
 import educationSchema from './education'
-
+import candidateSchema from './candidate'
 
 const linkSchema = gql`
   scalar Date
@@ -38,4 +38,5 @@ export default [
   experienceSchema,
   educationSchema,
   jobSchema,
+  candidateSchema
 ]

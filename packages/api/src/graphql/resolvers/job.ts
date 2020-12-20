@@ -89,14 +89,15 @@ const Mutation: JobMutation = {
     }
   },
 
-  applyJob: async (_parent, { jobId }, { me }) => {
+  applyJob: async (_parent, { jobId, sharerId }, { me }) => {
     try {
-      const candidate = await candidateService.createCandidate(me)
+      const candidate = await candidateService.createCandidate(me, jobId, sharerId)
       const updateJob = await Job.findByIdAndUpdate(
         jobId,
-        { $addToSet: { applicant: candidate._id } },
+        { $addToSet: { candidate: candidate._id } },
         { new: true }
       )
+      console.log('update: ', updateJob)
       return updateJob
     }
     catch (error) {

@@ -3,6 +3,8 @@ import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date'
 import GraphQLJSON, { GraphQLJSONObject } from 'graphql-type-json'
 import UserResolver from './user'
 import JobResolver from './job'
+import CandidateResolver from './candidate'
+
 
 
 export default {
@@ -14,7 +16,8 @@ export default {
 
   Mutation: {
     ...JobResolver.Mutation,
-    ...UserResolver.Mutation
+    ...UserResolver.Mutation,
+    ...CandidateResolver.Mutation
   },
 
   Date: GraphQLDate,

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 import React from 'react'
 import { useQuery, gql, useMutation } from '@apollo/client'
-import { Card, Spin, Modal, Button } from 'antd'
+import { Card, Spin, Modal, Button, message } from 'antd'
 import { useRouter } from 'next/router'
 import { SendOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
@@ -33,8 +33,8 @@ const JOB = gql`
 `
 
 const APPLY_JOB = gql`
-  mutation applyJob($jobId: ID!) {
-    applyJob(jobId: $jobId) {
+  mutation applyJob($jobId: ID!, $sharerId: ID) {
+    applyJob(jobId: $jobId, sharerId: $sharerId) {
       _id
     }
   }
@@ -65,7 +65,7 @@ BoxJobContent.propTypes = {
 
 const JobDetail = () => {
   const {
-    query: { id },
+    query: { id, sharing },
   } = useRouter()
 
   const { data, loading } = useQuery(JOB, {
@@ -74,10 +74,11 @@ const JobDetail = () => {
     },
   })
 
+  console.log('sharing: ', sharing)
   const [submitApplyJob] = useMutation(APPLY_JOB, {
-    variables: { jobId: id },
+    variables: { jobId: id, sharerId: sharing },
     onCompleted() {
-      console.log('sdsd')
+      message.success('Apply Job Successful!')
     },
   })
 

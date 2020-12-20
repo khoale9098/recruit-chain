@@ -10,6 +10,7 @@ const Job = gql`
     description: String
     requirement: String
     expiredAt:  DateTime
+    candidate: Candidate
     location: String
     slug: String
     vacancies: Int
@@ -28,7 +29,7 @@ const Job = gql`
     createJob(jobInput: JobInput!): Job
     updateJob(id: ID!, jobInput:JobInput!): Job
     deleteJob(id: ID!): Job
-    applyJob(jobId: ID!): Job
+    applyJob(jobId: ID!, sharerId:ID): Job
   }
   extend type Query{
     job(id: ID!): Job
