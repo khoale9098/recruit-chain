@@ -24,7 +24,7 @@ const schema = new Schema({
   password: String,
   avatar: {
     type: String,
-    default: 'https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/c234e48241988f87db7f7eb7d207d507.png'
+    default: '/img/cover/blank_img.jpg'
   },
   title: String,
   coverImage: String, //Ảnh bìa
@@ -52,6 +52,10 @@ const schema = new Schema({
   //   type: Schema.Types.ObjectId,
   //   ref: 'skill'
   // }],
+  competency: {
+    type: Number,
+    default: 0
+  },
   experience: [{
     type: Schema.Types.ObjectId,
     ref: 'experience'

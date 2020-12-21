@@ -3,7 +3,7 @@ import IUser from './IUser'
 interface IJob extends Document {
   title?: string,
   company?: Types.ObjectId | IJob,
-  applicant?: Types.ObjectId[] | IUser[],
+  candidate?: Types.ObjectId[] | IUser[],
   salaryFrom?: string,
   salaryTo?: string,
   description?: string,

@@ -11,9 +11,9 @@ const schema = new Schema({
     ref: 'user',
     required: true,
   },
-  applicant: [{
+  candidate: [{
     type: Schema.Types.ObjectId,
-    ref: 'applicant',
+    ref: 'candidate',
   }],
   tokenBonus: {
     type: Number,

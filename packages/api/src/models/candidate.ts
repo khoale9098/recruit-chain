@@ -12,6 +12,20 @@ const schema = new Schema({
     ref: 'user',
     required: true,
   },
+  job: {
+    type: Schema.Types.ObjectId,
+    ref: 'job',
+    required: true
+  },
+  companyApply: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
+  },
+  sharer: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+  },
   status: {
     type: String,
     default: JOB.APPLY_STATUS.RESPONSES,

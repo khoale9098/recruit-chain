@@ -2,7 +2,7 @@ import { isAuthenticated } from './authorization'
 import { combineResolvers } from 'graphql-resolvers'
 import { JobResolver } from './IResolver'
 import { jobService, candidateService } from '../../services'
-import { Job } from '../../models'
+import { Job, Candidate } from '../../models'
 
 interface JobQuery {
   job: JobResolver
@@ -89,15 +89,24 @@ const Mutation: JobMutation = {
     }
   },
 
-  applyJob: async (_parent, { jobId }, { me }) => {
+  applyJob: async (_parent, { jobId, companyId, sharerId }, { me }) => {
     try {
-      const candidate = await candidateService.createCandidate(me)
-      const updateJob = await Job.findByIdAndUpdate(
-        jobId,
-        { $addToSet: { applicant: candidate._id } },
-        { new: true }
-      )
-      return updateJob
+      const hasApply = Candidate.find({
+        candidate: me._id,
+        job: jobId
+      })
+      if (hasApply) {
+        throw new Error("HAS APPLY")
+      }
+      else {
+        const candidate = await candidateService.createCandidate(me, jobId, companyId, sharerId)
+        const updateJob = await Job.findByIdAndUpdate(
+          jobId,
+          { $addToSet: { candidate: candidate._id } },
+          { new: true }
+        )
+        return updateJob
+      }
     }
     catch (error) {
       console.log(error)
