@@ -2,7 +2,7 @@ import { List, Card } from 'antd'
 import PropTypes from 'prop-types'
 import ResponsesItem from './ResponsesItem'
 
-const ResponsesList = ({ candidate, loading }) => {
+const ResponsesList = ({ candidate, loading, refetchCount }) => {
   return (
     <div className="mx-2 px-4">
       <Card>
@@ -11,7 +11,7 @@ const ResponsesList = ({ candidate, loading }) => {
           loading={loading}
           renderItem={(item) => (
             <List.Item>
-              <ResponsesItem item={item} />
+              <ResponsesItem item={item} refetchCount={refetchCount} />
             </List.Item>
           )}
         />
@@ -21,6 +21,7 @@ const ResponsesList = ({ candidate, loading }) => {
 }
 ResponsesList.propTypes = {
   candidate: PropTypes.arrayOf(PropTypes.object),
+  refetchCount: PropTypes.func,
   loading: PropTypes.bool,
 }
 

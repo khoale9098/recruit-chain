@@ -34,7 +34,7 @@ export const JOB = {
     INTERVIEW_SECOND_ROUND: 'inteview2',
     OFFER: 'offer',
     REJECT: 'rejected',
-    WORKING: 'working',
+    RESERVE: 'reserve',
     ACCEPTED: 'accepted'
   }
 } as const
