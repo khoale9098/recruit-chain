@@ -17,6 +17,11 @@ const schema = new Schema({
     ref: 'job',
     required: true
   },
+  companyApply: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
+  },
   sharer: {
     type: Schema.Types.ObjectId,
     ref: 'user',

@@ -21,4 +21,4 @@ export type UserResolver<R = IUser | IUser[] | null, Parent = never> = Resolver<
 
 export type JobResolver<R = IJob | IJob[] | null | Boolean, Parent = never> = Resolver<R, Parent>
 
-export type CandidateResolver<R = ICandidate | ICandidate[] | null, Parent = never> = Resolver<R, Parent>
+export type CandidateResolver<R = ICandidate | ICandidate[] | number | null, Parent = never> = Resolver<R, Parent>

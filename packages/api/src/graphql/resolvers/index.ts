@@ -10,7 +10,8 @@ import CandidateResolver from './candidate'
 export default {
   Query: {
     ...UserResolver.Query,
-    ...JobResolver.Query
+    ...JobResolver.Query,
+    ...CandidateResolver.Query
     // ...commonQuery
   },
 

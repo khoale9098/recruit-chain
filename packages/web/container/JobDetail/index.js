@@ -33,8 +33,8 @@ const JOB = gql`
 `
 
 const APPLY_JOB = gql`
-  mutation applyJob($jobId: ID!, $sharerId: ID) {
-    applyJob(jobId: $jobId, sharerId: $sharerId) {
+  mutation applyJob($jobId: ID!, $companyId: ID!, $sharerId: ID) {
+    applyJob(jobId: $jobId, companyId: $companyId, sharerId: $sharerId) {
       _id
     }
   }
@@ -74,9 +74,7 @@ const JobDetail = () => {
     },
   })
 
-  console.log('sharing: ', sharing)
   const [submitApplyJob] = useMutation(APPLY_JOB, {
-    variables: { jobId: id, sharerId: sharing },
     onCompleted() {
       message.success('Apply Job Successful!')
     },
@@ -97,7 +95,9 @@ const JobDetail = () => {
       content: <div>Thông tin cá nhân</div>,
       cancelText: 'Cancel',
       onOk: () => {
-        submitApplyJob()
+        submitApplyJob({
+          variables: { jobId: id, companyId: data?.job?.company?._id, sharerId: sharing },
+        })
       },
     })
   }
