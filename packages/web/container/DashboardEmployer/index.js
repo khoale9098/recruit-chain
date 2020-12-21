@@ -1,6 +1,8 @@
 import React from 'react'
 import { Card } from 'antd'
+import { parse } from 'qs'
 import { useQuery, gql } from '@apollo/client'
+import { useRouter } from 'next/router'
 import ApplyStatistic from './components/ApplyStatistic'
 import ResponsesList from './components/ResponsesList'
 import { CONFIG } from '../../constants'
@@ -27,30 +29,40 @@ const GET_LIST_CANDIDATE = gql`
   }
 `
 
+const { ACCEPTED, INTERVIEW_FIRST_ROUND, INTERVIEW_SECOND_ROUND, OFFER, REJECT, RESPONSES, RESERVE } = CONFIG.JOB.APPLY_STATUS
 const DashboardEmployer = () => {
-  const { data, loading } = useQuery(GET_LIST_CANDIDATE, {
+  const {
+    query: { query },
+  } = useRouter()
+  const status = parse(query, { ignoreQueryPrefix: true })?.status
+
+  const { data, loading, refetch } = useQuery(GET_LIST_CANDIDATE, {
     variables: {
-      status: CONFIG.JOB.APPLY_STATUS.RESPONSES,
+      status: status || RESPONSES,
     },
   })
+
   return (
     <Card>
       <div className="flex w-full" style={{ flex: '0 0 1/4' }}>
-        <ApplyStatistic status={CONFIG.JOB.APPLY_STATUS.RESPONSES} />
-        <ApplyStatistic status={CONFIG.JOB.APPLY_STATUS.INTERVIEW_FIRST_ROUND} />
-        <ApplyStatistic status={CONFIG.JOB.APPLY_STATUS.INTERVIEW_SECOND_ROUND} />
-        <ApplyStatistic status={CONFIG.JOB.APPLY_STATUS.OFFER} />
+        <ApplyStatistic status={RESPONSES} isActive={status === RESPONSES || !status} />
+        <ApplyStatistic status={INTERVIEW_FIRST_ROUND} isActive={status === INTERVIEW_FIRST_ROUND} />
+        <ApplyStatistic status={INTERVIEW_SECOND_ROUND} isActive={status === INTERVIEW_SECOND_ROUND} />
+        <ApplyStatistic status={OFFER} isActive={status === OFFER} />
       </div>
       <div className="flex w-full mt-4">
         <div className="w-3/4">
-          <ResponsesList candidate={data?.getListCandidate} loading={loading} />
+          <ResponsesList candidate={data?.getListCandidate} loading={loading} refetchCount={refetch} />
         </div>
         <div className="w-1/4 mx-2">
           <div className="mr-2">
-            <ApplyStatistic status={CONFIG.JOB.APPLY_STATUS.ACCEPTED} />
+            <ApplyStatistic status={ACCEPTED} isActive={status === ACCEPTED} />
           </div>
           <div className="mr-2 mt-4">
-            <ApplyStatistic status={CONFIG.JOB.APPLY_STATUS.REJECT} />
+            <ApplyStatistic status={REJECT} isActive={status === REJECT} />
+          </div>
+          <div className="mr-2 mt-4">
+            <ApplyStatistic status={RESERVE} isActive={status === RESERVE} />
           </div>
         </div>
       </div>

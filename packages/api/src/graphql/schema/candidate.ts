@@ -29,6 +29,7 @@ const Candidate = gql`
     rejected
     working
     accepted
+    reserve
   }
 `
 export default Candidate
