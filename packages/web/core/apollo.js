@@ -39,14 +39,14 @@ const retryLink = new RetryLink({
 function createMainLink() {
   const token = getToken()
   const httpLink = new HttpLink({
-    uri: 'http://localhost:3002/graphql',
+    uri: process.env.APOLLO_SERVER_URI,
   })
   if (isServer) {
     return httpLink
   }
 
   const wsLink = new WebSocketLink({
-    uri: 'ws://localhost:3002/graphql',
+    uri: process.env.APOLLO_WS_URI,
     options: {
       reconnect: true,
       connectionParams: () => ({

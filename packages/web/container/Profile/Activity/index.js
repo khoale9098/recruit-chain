@@ -50,11 +50,7 @@ const Activity = () => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item>
-          <List.Item.Meta
-            avatar={<Avatar src="/img/profile.jpg" size={42} />}
-            title={<ActivityTitle />}
-            description={<ActivityDescription />}
-          />
+          <List.Item.Meta avatar={<Avatar size={42} />} title={<ActivityTitle />} description={<ActivityDescription />} />
         </List.Item>
       )}
     />

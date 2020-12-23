@@ -1,17 +1,33 @@
-const path = require('path')
+const { PHASE_PRODUCTION_BUILD } = require('next/constants')
 
 module.exports = (phase) => {
-  webpack = (config) => {
-    const absoluteImportParts = ['public', 'components', 'pages', 'utils', 'styles', 'constants']
-    function generateAbsolutePath(partName) {
-      const aliasName = `~/${partName}`
-      const importPath = path.join(__dirname, partName)
-      config.resolve.alias[aliasName] = importPath
-    }
-    absoluteImportParts.forEach(generateAbsolutePath)
-    return config
-  }
+  // when `next build` or `npm run build` is used
+  const isProd = phase === PHASE_PRODUCTION_BUILD
+  const nodeEnv = (() => {
+    if (isProd) return 'production'
+    return 'development'
+  })()
+
+  console.log('ENV:', nodeEnv)
+
+  const env = {
+    development: {
+      SERVER_URI: 'http://localhost:3002',
+      APOLLO_SERVER_URI: 'http://localhost:3002/graphql',
+      APOLLO_WS_URI: 'ws://localhost:3002/graphql',
+      TOKEN_UPLOAD:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksImF0IjoiMjAyMDEyMjMiLCJpYXQiOjE2MDg2OTM4ODZ9.6WrFIyA8q6Nc1T78uK7-dWm-6vllKF9mngmw4cQr-KI',
+    },
+
+    production: {
+      SERVER_URI: 'http://localhost:4000',
+      APOLLO_SERVER_URI: 'http://localhost:4000/graphql',
+      TOKEN_UPLOAD:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksImF0IjoiMjAyMDEyMjMiLCJpYXQiOjE2MDg2OTM4ODZ9.6WrFIyA8q6Nc1T78uK7-dWm-6vllKF9mngmw4cQr-KI',
+    },
+  }[nodeEnv]
+
   return {
-    webpack,
+    env,
   }
 }
