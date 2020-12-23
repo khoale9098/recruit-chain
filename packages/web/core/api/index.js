@@ -16,8 +16,7 @@ async function getResponsePayload(req, opts, res) {
 }
 
 let api = ky.create({
-  // prefixUrl: process.env.SERVER_URI,
-  prefixUrl: 'http://localhost:3002',
+  prefixUrl: process.env.SERVER_URI,
   hooks: {
     afterResponse: [getResponsePayload],
   },
@@ -68,15 +67,13 @@ export const logout = (customBackLink) => {
 }
 
 export const upload = ({ file }) => {
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksImF0IjoiMjAyMDEyMTYiLCJpYXQiOjE2MDgwOTEwMjR9.j0AA7YRJYafNOqxOJYtOkURA-dR9ELtF_sB-Ypsvsag'
   const formData = new FormData()
   formData.append('upload', file.originFileObj)
   return ky
     .post('https://api.stg.hosukuru.c2sg.asia/upload', {
       body: formData,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${process.env.TOKEN_UPLOAD}`,
       },
     })
     .json()

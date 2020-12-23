@@ -7,7 +7,7 @@ import { copyToClipboard } from 'utils'
 
 const ShareJob = ({ show, cancel, userId, idJob }) => {
   const copyLinkToClipboard = () => {
-    const linkToJob = `http://localhost:3000/carrers/${idJob}?sharing=${userId}`
+    const linkToJob = `${window.location.origin}/carrers/${idJob}?sharing=${userId}`
     copyToClipboard(linkToJob)
     message.success('Copy to clipboard!')
   }

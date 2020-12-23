@@ -9,6 +9,10 @@ import helmet from 'helmet'
 import { createServer } from 'http'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+// Blockchain
+import Web3 from 'web3'
+import contact from 'truffle-contract'
+
 import oauth from './setting/oauth'
 import graphqlServer from './graphql'
 import { consoleRequestInfo, ipMiddleware } from './setting/middleware'
@@ -16,7 +20,7 @@ import { consoleRequestInfo, ipMiddleware } from './setting/middleware'
 import path from 'path'
 
 
-
+const provider = new Web3.providers.HttpProvider("http://localhost:8545");
 const app = express()
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
