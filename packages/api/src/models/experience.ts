@@ -3,15 +3,19 @@ import {
 } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2'
 import { IPagingModel } from '../interface/IPaging'
-import IExperience from '../interface/IEducation'
-
+import IExperience from '../interface/IExperience'
 
 const modelName = 'experience'
 
 const schema = new Schema({
-  job_title: String,
-  companyName: String,
-  establishDate: Date,
+  job_title: { type: String, required: true },
+  employment_type: String,
+  companyName: { type: String, required: true },
+  location: String,
+  description: String,
+  media: String,
+  startDate: Date,
+  endDate: Date,
 })
 
 
