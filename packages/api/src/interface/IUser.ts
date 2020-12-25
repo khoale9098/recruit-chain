@@ -4,6 +4,7 @@ interface IUser extends Document {
   username?: string,
   firstName?: string,
   lastName?: string,
+  tokenWork?: number,
   email?: string,
   about?: string,
   avatar?: string,

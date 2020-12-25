@@ -1,5 +1,6 @@
 import { Tabs } from 'antd'
 import Activity from '../Activity'
+import SettingProfile from '../SettingProfile'
 
 const { TabPane } = Tabs
 
@@ -10,11 +11,8 @@ const RightSideContainer = () => {
         <TabPane tab="Activity" key="1">
           <Activity />
         </TabPane>
-        <TabPane tab="Profile" key="2">
-          <Activity />
-        </TabPane>
-        <TabPane tab="Settings" key="3">
-          <Activity />
+        <TabPane tab="Settings" key="2">
+          <SettingProfile />
         </TabPane>
       </Tabs>
     </div>
