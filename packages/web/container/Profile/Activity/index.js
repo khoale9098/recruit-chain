@@ -33,7 +33,7 @@ const ActivityDescription = () => {
 }
 const ActivityTitle = () => {
   return (
-    <div className="blocl">
+    <div className="block">
       <div className="font-bold text-base"> Khoa le</div>
       <div className="flex flex-row items-center">
         <ClockCircleOutlined className="text-xs text-red-600 font-bold" />
@@ -50,7 +50,11 @@ const Activity = () => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item>
-          <List.Item.Meta avatar={<Avatar size={42} />} title={<ActivityTitle />} description={<ActivityDescription />} />
+          <List.Item.Meta
+            avatar={<Avatar size={42} src="http://app.aworker.io/images/profile/avatar_employee.png" />}
+            title={<ActivityTitle />}
+            description={<ActivityDescription />}
+          />
         </List.Item>
       )}
     />
