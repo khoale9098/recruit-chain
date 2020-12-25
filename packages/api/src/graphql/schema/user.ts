@@ -41,6 +41,11 @@ const User = gql`
     education: [Education]
   }
 
+  type UserExperience{
+    _id: ID!
+    experience: [Experience]
+  }
+
   type ActivityLog {
     _id: String
     place: String
@@ -71,6 +76,7 @@ const User = gql`
     getUserList(type: UserType = any, filter: FilterUser, limit: Int, offset: Int): [User!]
     currentUser: User
     getMyEducation: UserEducation
+    getMyExperience: UserExperience
   }
   
   extend type Mutation {

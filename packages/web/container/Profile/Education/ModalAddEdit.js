@@ -40,7 +40,7 @@ const ModalAddEdit = ({ show, cancel, education, isEdit, refetch }) => {
   const [updateEducation, { loading: loadingUpdated }] = useMutation(UPDATE_EDUCATION, {
     onCompleted() {
       refetch()
-      message.success('Update Successful!')
+      message.success('Update S')
     },
   })
 
@@ -60,7 +60,15 @@ const ModalAddEdit = ({ show, cancel, education, isEdit, refetch }) => {
         form={form}
         layout="vertical"
         onFinish={onSubmit}
-        initialValues={{ ...education, startDate: moment(education.startDate), endDate: moment(education.endDate) }}
+        initialValues={{
+          ...education,
+          ...(education?.startDate && {
+            startDate: moment(education.startDate),
+          }),
+          ...(education?.endDate && {
+            endDate: moment(education.endDate),
+          }),
+        }}
       >
         <Form.Item name={FIELD_EDUCATION.EDUCATION_ORG} label="School" required>
           <Input />
