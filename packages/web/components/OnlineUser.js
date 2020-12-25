@@ -1,13 +1,25 @@
 import { Avatar, Badge } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
-import { useRecoilValue } from 'recoil'
-import { authAtoms } from 'store'
+import { useQuery, gql } from '@apollo/client'
+
+const CURRENT_USER = gql`
+  query currentUser {
+    currentUser {
+      _id
+      companyName
+      avatar
+      firstName
+      lastName
+      userType
+    }
+  }
+`
 
 const OnlineUser = ({ isCollapsed }) => {
-  const auth = useRecoilValue(authAtoms.auth)
+  const { data } = useQuery(CURRENT_USER)
 
-  const isEmployee = auth?.userType === 'employee'
+  const isEmployee = data?.currentUser?.userType === 'employee'
   return (
     <div className="flex justify-center items-center my-4 flex-col">
       <span>
@@ -16,14 +28,14 @@ const OnlineUser = ({ isCollapsed }) => {
             size={64}
             className="flex justify-center items-center object-cover"
             icon={<UserOutlined />}
-            src={auth?.user?.avatar}
+            src={data?.currentUser.avatar}
           />
         </Badge>
       </span>
       {!isCollapsed && (
         <>
           <h3 className="font-bold pt-2 text-base">
-            {isEmployee ? `${auth?.user?.firstName} ${auth?.user?.lastName}` : auth?.user?.companyName}
+            {isEmployee ? `${data?.currentUser?.firstName} ${data?.currentUser?.lastName}` : data?.currentUser?.companyName}
           </h3>
           <span className="text-gray-500">{isEmployee ? 'employee' : 'employer'}</span>
         </>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
-import { Avatar } from 'antd'
+import { Avatar, Spin } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 
 import CoverImage from '../CoverImage'
 import AboutUser from '../AboutUser'
 import AvatarEmployee from '../AvatarEmployee'
-import SocialNetwork from '../SocialNetwork'
+// import SocialNetwork from '../SocialNetwork'
 import Experience from '../Experience'
 import Education from '../Education'
 import ModalEditUser from '../ModalEditUser'
@@ -21,7 +21,9 @@ const CURRENT_USER = gql`
       lastName
       createdAt
       updatedAt
+      coverImage
       about
+      live
       userType
     }
   }
@@ -33,11 +35,13 @@ const UPDATE_USER = gql`
       _id
       companyName
       avatar
+      live
       firstName
       lastName
       about
       createdAt
       updatedAt
+      coverImage
       userType
     }
   }
@@ -60,12 +64,30 @@ const Information = () => {
       },
     })
   }
-  if (loading) return 'loading'
+  const handleUpdateCoverImage = async (url) => {
+    await updateUser({
+      variables: {
+        userInput: {
+          coverImage: url,
+        },
+      },
+    })
+  }
+  if (loading)
+    return (
+      <div className="w-full flex-1">
+        <div className="flex justify-center items-center">
+          <Spin />
+        </div>
+      </div>
+    )
+
+  const isEmployee = data?.currentUser?.userType === 'employee'
 
   return (
     <div className="w-full flex-1">
       <section className="overflow-visible bg-white rounded-sm shadow-md">
-        <CoverImage />
+        <CoverImage coverImage={data?.currentUser?.coverImage} updateCoverImage={handleUpdateCoverImage} />
         <div className="px-6 pb-6 relative">
           <EditOutlined
             className="text-gray-700 absolute right-0 text-2xl pt-2 pr-4 cursor-pointer"
@@ -81,32 +103,34 @@ const Information = () => {
                   ? `${data?.currentUser?.firstName} ${data?.currentUser?.lastName}`
                   : data?.currentUser?.companyName}
               </div>
-              <div className="text-xl">Software Engineer at Agecode Co.Ltd</div>
-              <div>Ho Chi Minh City</div>
+              {isEmployee && <div className="text-xl">Software Engineer at Agecode Co.Ltd</div>}
+              <div>{data?.currentUser?.live}</div>
             </div>
             <div>
               {/* <SocialNetwork /> */}
-              <div className="flex pt-3 items-center " style={{ maxWidth: '232px' }}>
-                <Avatar
-                  size={32}
-                  className="flex-none box-border border-2 border-solid border-transparent rounded"
-                  shape
-                  src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
-                />
-                <div className="font-semibold ml-2">HCMC University of Technology and Education</div>
-              </div>
+              {isEmployee && (
+                <div className="flex pt-3 items-center " style={{ maxWidth: '232px' }}>
+                  <Avatar
+                    size={32}
+                    className="flex-none box-border border-2 border-solid border-transparent rounded"
+                    shape
+                    src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
+                  />
+                  <div className="font-semibold ml-2">HCMC University of Technology and Education</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
-      <AboutUser about={data?.currentUser?.about} updateUser={updateUser} />
-      {data?.currentUser?.userType === 'employee' && (
+      <AboutUser about={data?.currentUser?.about} updateUser={updateUser} isEmployee={isEmployee} />
+      {isEmployee && (
         <>
           <Education />
           <Experience />
         </>
       )}
-      <ModalEditUser show={showEdit} cancel={() => setShowEdit(false)} />
+      <ModalEditUser show={showEdit} cancel={() => setShowEdit(false)} updateUser={updateUser} user={data?.currentUser} />
     </div>
   )
 }

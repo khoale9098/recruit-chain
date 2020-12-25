@@ -17,6 +17,8 @@ const modelName = 'user'
 const schema = new Schema({
   username: { type: String, lowercase: true },
   firstName: String,
+  address: String,   //User's ETH address
+  identityAddress: String,   //User's identity address. For legacy identity it is   different from the user's address. For newer identity it the same.
   lastName: String,
   email: String,
   phone: String,
@@ -24,12 +26,15 @@ const schema = new Schema({
   password: String,
   avatar: {
     type: String,
-    default: '/img/cover/blank_img.jpg'
+    default: '/img/cover/blank_img.png'
   },
   title: String,
-  coverImage: String, //Ảnh bìa
+  coverImage: {
+    type: String,
+    default: '/img/cover.png'
+  }, //Ảnh bìa
   birthday: Date,
-  address: String,
+  live: String,
   tokenWork: Number,
   // following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   connect: [{ type: Schema.Types.ObjectId, ref: 'user' }],
@@ -62,7 +67,7 @@ const schema = new Schema({
   }],
   education: [{
     type: Schema.Types.ObjectId,
-    ref: 'experience'
+    ref: 'education'
   }],
   certifications: [{
     type: Schema.Types.ObjectId,

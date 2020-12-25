@@ -10,13 +10,14 @@ const ModalEditAbout = ({ show, cancel, updateUser, about }) => {
 
   const onUpdateAbout = async () => {
     if (aboutText && aboutText.trim()) {
-      await updateUser({
+      const res = await updateUser({
         variables: {
           userInput: {
             about: aboutText,
           },
         },
       })
+      if (res) cancel()
     } else {
       cancel()
     }
@@ -37,6 +38,7 @@ const ModalEditAbout = ({ show, cancel, updateUser, about }) => {
 
 ModalEditAbout.propTypes = {
   show: PropTypes.bool,
+  about: PropTypes.string,
   cancel: PropTypes.func,
   updateUser: PropTypes.func,
 }

@@ -11,9 +11,11 @@ const modelName = 'education'
 const schema = new Schema({
   summary: String,
   education_org: String,
-  degrees: [String],
-  startDate: Date,
-  endDate: Date
+  degree: String,
+  media: String,
+  startDate: String,
+  field_of_study: String,
+  endDate: String
 })
 
 

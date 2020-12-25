@@ -19,6 +19,7 @@ interface UserQuery {
   getUser: UserResolver,
   getUserList: UserResolver
   currentUser: UserResolver
+  getMyEducation: UserResolver
 }
 
 interface UserMutation {
@@ -68,6 +69,16 @@ const Query: UserQuery = {
       return userList
     }
   ),
+
+  getMyEducation: async (_parent, _, { me }) => {
+    try {
+      const us = await User.findById(me._id, { education: 1 }).populate('education')
+      return us
+    }
+    catch (err) {
+      throw err
+    }
+  }
 }
 
 
