@@ -5,8 +5,8 @@ import { PlusOutlined } from '@ant-design/icons'
 import JobItem from 'components/JobItem'
 
 const GET_JOB_LIST = gql`
-  query getJobList {
-    getJobList {
+  query getJobsById {
+    getJobsById {
       docs {
         _id
         createdAt
@@ -44,12 +44,13 @@ const JobList = () => {
       </Button>
     </div>
   )
+
   return (
     <Card className="w-full bg-white" extra={renderButton()}>
       <div className="px-4 pt-6">
         <List
           grid={{ gutter: 16, column: 3 }}
-          dataSource={data?.getJobList?.docs}
+          dataSource={data?.getJobsById?.docs}
           loading={loading}
           renderItem={(item) => (
             <List.Item>

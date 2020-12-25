@@ -11,6 +11,7 @@ const User = gql`
     email: String
     phone: String
     about: String
+    live: String
     avatar: String
     title: String
     coverImage: String
@@ -33,6 +34,11 @@ const User = gql`
     loginClientIp: String
     searchHistory: [String!]
     isPrivate: Boolean
+  }
+
+  type UserEducation{
+    _id: ID!
+    education: [Education]
   }
 
   type ActivityLog {
@@ -64,6 +70,7 @@ const User = gql`
     getUser(username: String): User
     getUserList(type: UserType = any, filter: FilterUser, limit: Int, offset: Int): [User!]
     currentUser: User
+    getMyEducation: UserEducation
   }
   
   extend type Mutation {
@@ -81,6 +88,7 @@ const User = gql`
     password: String
     about: String
     companyName: String
+    live: String
     coverImage: String
     title: String
     avatar: String
