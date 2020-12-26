@@ -11,6 +11,7 @@ import {
   ProjectOutlined,
   BarChartOutlined,
   DesktopOutlined,
+  ShoppingOutlined,
 } from '@ant-design/icons'
 import OnlineUser from 'components/OnlineUser'
 
@@ -73,6 +74,11 @@ const SliderLayout = ({ collapsed, isEmployee = false }) => {
       name: 'Jobs',
       href: '/job',
       icon: <AppstoreOutlined />,
+    },
+    {
+      name: 'My Vacancies',
+      href: '/my-vacancies',
+      icon: <ShoppingOutlined />,
     },
     {
       name: 'Responses',

@@ -53,10 +53,10 @@ const schema = new Schema({
     default: USER.USER_TYPE.EMPLOYEE
   },
   note: String,
-  // skill: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'skill'
-  // }],
+  skill: [{
+    type: Schema.Types.ObjectId,
+    ref: 'skill'
+  }],
   competency: {
     type: Number,
     default: 0
@@ -69,10 +69,7 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'education'
   }],
-  certifications: [{
-    type: Schema.Types.ObjectId,
-    ref: 'certification'
-  }],
+
   // Company
   website: String,
   companyName: String,
