@@ -32,7 +32,7 @@ const Experience = () => {
   const { data, loading, refetch } = useQuery(GET_MY_EXPERIENCE)
 
   return (
-    <ContainerProfile title="Total Work Experience - 3 year(s)" isEdit={false} showModal={() => setShowModal(true)}>
+    <ContainerProfile title="Total Work Experience" isEdit={false} showModal={() => setShowModal(true)}>
       <List
         className="w-full"
         loading={loading}
