@@ -24,9 +24,14 @@ const FormAddJob = ({ isEdit, job }) => {
   const [addJob] = useMutation(CREATE_JOB, {
     onCompleted() {
       message.success('Add job successful!')
+      window.location.reload()
     },
-    onError() {
-      message.error('Add job error!')
+    onError(err) {
+      if (err.message === 'YOU DONT HAVE ENOUGH TOKEN') {
+        message.error('You dont have enough token work to add job!')
+      } else {
+        message.error('Your vacancie posting is unsuccessful!')
+      }
     },
   })
 
@@ -47,6 +52,7 @@ const FormAddJob = ({ isEdit, job }) => {
       salaryFrom: values.salaryFrom,
       salaryTo: values.salaryTo,
       vacancies: values.vacancies,
+      tokenBonus: values.tokenBonus,
       requirement: requirmentValue,
       description: descriptionValue,
       benefit: benefitValue,
@@ -79,6 +85,7 @@ const FormAddJob = ({ isEdit, job }) => {
         location: job?.location || '',
         vacancies: job?.vacancies || '',
         category: (job?.category && JSON.parse(job?.category)) || [],
+        tokenBonus: job?.tokenBonus || 0,
       }}
     >
       <Card extra={_renderButton()}>

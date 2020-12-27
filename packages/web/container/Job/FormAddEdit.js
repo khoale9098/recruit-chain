@@ -4,6 +4,7 @@ import { CONFIG } from '../../constants'
 
 const FIELD_JOB = {
   TITLE: 'title',
+  TOKEN_BONUS: 'tokenBonus',
   SALARY_FROM: 'salaryFrom',
   SALARY_TO: 'salaryTo',
   EXPIRED_AT: 'expiredAt',
@@ -14,7 +15,7 @@ const FIELD_JOB = {
 const FormAddEdit = () => {
   return (
     <>
-      <Form.Item label="Job Title" name={FIELD_JOB.TITLE} className="font-semibold flex flex-col" labelAlign="left">
+      <Form.Item label="Job Title" name={FIELD_JOB.TITLE} className="font-semibold flex flex-col" labelAlign="left" required>
         <Input />
       </Form.Item>
       <div className="w-full flex">
@@ -26,6 +27,17 @@ const FormAddEdit = () => {
         <div className="w-1/3 ml-4 ">
           <Form.Item label="Expired Date" name={FIELD_JOB.EXPIRED_AT} className="font-semibold flex flex-col" labelAlign="left">
             <DatePicker className="w-full" />
+          </Form.Item>
+        </div>
+        <div className="w-1/3 ml-4 ">
+          <Form.Item
+            label="Token Bonus"
+            name={FIELD_JOB.TOKEN_BONUS}
+            className="font-semibold flex flex-col"
+            labelAlign="left"
+            required
+          >
+            <InputNumber className="w-full" />
           </Form.Item>
         </div>
       </div>
