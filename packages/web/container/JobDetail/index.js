@@ -32,6 +32,14 @@ const JOB = gql`
   }
 `
 
+const CURRENT_USER = gql`
+  query currentUser {
+    currentUser {
+      userType
+    }
+  }
+`
+
 const APPLY_JOB = gql`
   mutation applyJob($jobId: ID!, $companyId: ID!, $sharerId: ID) {
     applyJob(jobId: $jobId, companyId: $companyId, sharerId: $sharerId) {
@@ -74,6 +82,10 @@ const JobDetail = () => {
     },
   })
 
+  const { data: cur } = useQuery(CURRENT_USER)
+
+  const isEmployee = cur?.currentUser?.userType === 'employee'
+
   const [submitApplyJob] = useMutation(APPLY_JOB, {
     onCompleted() {
       message.success('Apply Job Successful!')
@@ -101,6 +113,7 @@ const JobDetail = () => {
       },
     })
   }
+
   const renderApply = () => {
     return (
       <div className="flex">
@@ -127,7 +140,7 @@ const JobDetail = () => {
     )
   }
   return (
-    <Card title={<h3 className="text-lg font-bold">{data?.job?.title}</h3>} extra={renderApply()}>
+    <Card title={<h3 className="text-lg font-bold">{data?.job?.title}</h3>} extra={isEmployee && renderApply()}>
       <div className="flex  m-md:flex-col m-xs:mx-4">
         <div className="w-full m-md:w-full pr-4 m-md:pr-0 m-md:m-auto">
           <div>

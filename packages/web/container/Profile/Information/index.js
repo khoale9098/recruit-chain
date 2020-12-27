@@ -28,6 +28,17 @@ const CURRENT_USER = gql`
     }
   }
 `
+const GET_MY_EXPERIENCE = gql`
+  query getMyExperience {
+    getMyExperience {
+      _id
+      experience {
+        job_title
+        companyName
+      }
+    }
+  }
+`
 
 const UPDATE_USER = gql`
   mutation updateUser($userInput: UserInput) {
@@ -46,9 +57,27 @@ const UPDATE_USER = gql`
     }
   }
 `
+
+const GET_MY_EDUCATION = gql`
+  query getMyEducation {
+    getMyEducation {
+      _id
+      education {
+        education_org
+      }
+    }
+  }
+`
+
 const Information = () => {
   const [showEdit, setShowEdit] = React.useState(false)
   const { data, loading, refetch } = useQuery(CURRENT_USER)
+  const { data: cur } = useQuery(GET_MY_EXPERIENCE)
+  const { data: edu } = useQuery(GET_MY_EDUCATION)
+
+  const title = cur?.getMyExperience?.experience?.[0]?.job_title
+  const name = cur?.getMyExperience?.experience?.[0]?.companyName
+
   const [updateUser] = useMutation(UPDATE_USER, {
     onCompleted() {
       refetch()
@@ -103,7 +132,7 @@ const Information = () => {
                   ? `${data?.currentUser?.firstName} ${data?.currentUser?.lastName}`
                   : data?.currentUser?.companyName}
               </div>
-              {isEmployee && <div className="text-xl">Software Engineer at Agecode Co.Ltd</div>}
+              {isEmployee && <div className="text-xl">{`${title} at ${name}`}</div>}
               <div>{data?.currentUser?.live}</div>
             </div>
             <div>
@@ -116,7 +145,7 @@ const Information = () => {
                     shape
                     src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
                   />
-                  <div className="font-semibold ml-2">HCMC University of Technology and Education</div>
+                  <div className="font-semibold ml-2">{edu?.getMyEducation?.education?.[0]?.education_org}</div>
                 </div>
               )}
             </div>

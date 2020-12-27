@@ -8,7 +8,6 @@ const FIELD_JOB = {
   SALARY_TO: 'salaryTo',
   EXPIRED_AT: 'expiredAt',
   LOCATION: 'location',
-  VACANCIES: 'vacancies',
   CATEGORY: 'category',
 }
 
@@ -27,11 +26,6 @@ const FormAddEdit = () => {
         <div className="w-1/3 ml-4 ">
           <Form.Item label="Expired Date" name={FIELD_JOB.EXPIRED_AT} className="font-semibold flex flex-col" labelAlign="left">
             <DatePicker className="w-full" />
-          </Form.Item>
-        </div>
-        <div className="w-1/3 ml-4 ">
-          <Form.Item label="Vacancies" name={FIELD_JOB.VACANCIES} className="font-semibold flex flex-col" labelAlign="left">
-            <InputNumber className="w-full" min={1} />
           </Form.Item>
         </div>
       </div>

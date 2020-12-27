@@ -12,11 +12,6 @@ const CHANGE_STATUS = gql`
     }
   }
 `
-const COUNT_CANDIDATE = gql`
-  query countCandidateByStatus($status: CandidateStatus!) {
-    countCandidateByStatus(status: $status)
-  }
-`
 
 const { ACCEPTED, INTERVIEW_FIRST_ROUND, INTERVIEW_SECOND_ROUND, OFFER, REJECT, RESERVE, RESPONSES } = CONFIG.JOB.APPLY_STATUS
 
@@ -28,13 +23,12 @@ const FAKE_INDEX_STATUS = {
   4: ACCEPTED,
 }
 
-const ResponsesItem = ({ item, refetchCount }) => {
+const ResponsesItem = ({ item }) => {
   const [hoverRef, isHovered] = useHover()
   const [submitChangeStatus] = useMutation(CHANGE_STATUS, {
     onCompleted() {
-      refetchCount()
+      window.location.reload()
     },
-    // refetchQueries()
   })
 
   const handleNextStep = (status) => {

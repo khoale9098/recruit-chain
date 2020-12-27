@@ -115,11 +115,13 @@ const Mutation: UserMutation = {
       throw err
     }
   }),
+
   changePassword: combineResolvers(isAuthenticated, async (_parent, { oldPassword, newPassword }, { me }) => {
     if (!User.validPassword(oldPassword, me.password)) throw new Error('INVALID_REQUEST')
     const user = await userService.resetPassword(me._id, newPassword)
     return user
   }),
+
   clearSearchHistory: async (_parent, { }, { me }) => {
     const updatedUser = await User.findByIdAndUpdate(me._id, { $set: { searchHistory: [] } }, { new: true })
     return updatedUser
