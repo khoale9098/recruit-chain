@@ -24,6 +24,7 @@ const GET_MY_EDUCATION = gql`
     }
   }
 `
+
 const Education = () => {
   const [education, setEducation] = useState(null)
   const [showModal, setShowModal] = useState(false)

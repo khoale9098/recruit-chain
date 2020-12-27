@@ -57,6 +57,7 @@ const Job = gql`
 
   input JobInput{
     title: String!
+    tokenBonus: Int!
     # company: ID!
     salaryFrom: String
     salaryTo: String

@@ -1,6 +1,7 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client'
-import { Table, Space, Button } from 'antd'
+import { useQuery, useMutation, gql } from '@apollo/client'
+import { Table, Space, Button, Popconfirm } from 'antd'
+import { useRouter } from 'next/router'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 const GET_JOB_LIST = gql`
@@ -31,6 +32,14 @@ const GET_JOB_LIST = gql`
   }
 `
 
+const DELETE_JOB = gql`
+  mutation deleteJob($id: ID!) {
+    deleteJob(id: $id) {
+      _id
+    }
+  }
+`
+
 const FIELD_VACANCIES = {
   TITLE: 'title',
   ID: '_id',
@@ -41,15 +50,43 @@ const FIELD_VACANCIES = {
 }
 
 const VacanciesView = () => {
-  const { data, loading } = useQuery(GET_JOB_LIST)
-  const _renderAction = () => (
+  const router = useRouter()
+  const { data, loading, refetch } = useQuery(GET_JOB_LIST)
+  const [deleteVancancie] = useMutation(DELETE_JOB, {
+    onCompleted() {
+      refetch()
+    },
+  })
+
+  const handleDelVancancie = async (id) => {
+    await deleteVancancie({
+      variables: {
+        id,
+      },
+    })
+  }
+
+  const _renderAction = (item) => (
     <Space size="middle">
-      <Button className="flex justify-center items-center" type="primary" onClick={() => {}} icon={<EditOutlined />} />
       <Button
-        className="text-white bg-red-600 border border-solid border-red-600 flex justify-center items-center"
-        danger
-        icon={<DeleteOutlined />}
+        className="flex justify-center items-center"
+        type="primary"
+        icon={<EditOutlined />}
+        onClick={() => router.push('my-vacancies/[id]', `my-vacancies/${item?._id}`)}
       />
+      <Popconfirm
+        placement="topLeft"
+        title="Are you sure to delete this vancancie?"
+        onConfirm={() => handleDelVancancie(item?._id)}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Button
+          className="text-white bg-red-600 border border-solid border-red-600 flex justify-center items-center"
+          danger
+          icon={<DeleteOutlined />}
+        />
+      </Popconfirm>
     </Space>
   )
   const columns = [
@@ -78,11 +115,7 @@ const VacanciesView = () => {
       dataIndex: FIELD_VACANCIES.TOKEN_FOR_CLOSING,
       key: FIELD_VACANCIES.TOKEN_FOR_CLOSING,
     },
-    // {
-    //   title: 'Status',
-    //   dataIndex: 'status',
-    //   key: 'status',
-    // },
+
     {
       title: '',
       render: _renderAction,

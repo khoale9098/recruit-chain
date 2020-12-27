@@ -2,8 +2,7 @@ import { Types } from 'mongoose'
 import { isAuthenticated } from './authorization'
 import { combineResolvers } from 'graphql-resolvers'
 import { CandidateResolver, Resolver } from './IResolver'
-import ICandidate from '../../interface/ICandidate'
-import { Candidate } from '../../models'
+import { Candidate, User } from '../../models'
 import { candidateService } from '../../services'
 import { JOB } from '../../setting/constants'
 
@@ -21,6 +20,7 @@ const Mutation: CandidateMutation = {
   changeStatus: async (_parent, { status, candidateId }) => {
     try {
       const updateCandidate = Candidate.findByIdAndUpdate({ _id: candidateId }, { status }, { new: true })
+      //  
       return updateCandidate
     }
     catch (err) {

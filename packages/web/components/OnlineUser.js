@@ -1,7 +1,8 @@
 import { Avatar, Badge } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
+import { UserOutlined, ThunderboltFilled } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 import { useQuery, gql } from '@apollo/client'
+import { formatToken } from 'utils'
 
 const CURRENT_USER = gql`
   query currentUser {
@@ -9,6 +10,7 @@ const CURRENT_USER = gql`
       _id
       companyName
       avatar
+      tokenWork
       firstName
       lastName
       userType
@@ -38,6 +40,12 @@ const OnlineUser = ({ isCollapsed }) => {
             {isEmployee ? `${data?.currentUser?.firstName} ${data?.currentUser?.lastName}` : data?.currentUser?.companyName}
           </h3>
           <span className="text-gray-500">{isEmployee ? 'employee' : 'employer'}</span>
+          <div>
+            <div className="flex items-center">
+              <ThunderboltFilled style={{ color: '#5369f8' }} />
+              <p className="ml-1 text-primary font-semibold">{formatToken(data?.currentUser?.tokenWork)}</p>
+            </div>
+          </div>
         </>
       )}
     </div>

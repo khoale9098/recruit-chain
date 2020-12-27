@@ -2,7 +2,7 @@ import { isAuthenticated } from './authorization'
 import { combineResolvers } from 'graphql-resolvers'
 import { JobResolver } from './IResolver'
 import { jobService, candidateService } from '../../services'
-import { Job, Candidate } from '../../models'
+import { Job, Candidate, User } from '../../models'
 
 interface JobQuery {
   job: JobResolver
@@ -65,8 +65,16 @@ const Query: JobQuery = {
 const Mutation: JobMutation = {
 
   createJob: async (_parent, { jobInput }, { me }) => {
-    const job = await Job.create({ ...jobInput, company: me._id })
-    return job;
+    const { tokenBonus } = jobInput
+    const { tokenWork } = me
+    if (tokenWork < tokenBonus) throw new Error("YOU DONT HAVE ENOUGH TOKEN")
+    else {
+      const job = await Job.create({ ...jobInput, company: me._id })
+      if (job?._id) {
+        await User.findOneAndUpdate({ _id: me?._id }, { tokenWork: tokenWork - tokenBonus }, { new: true })
+      }
+      return job;
+    }
   },
 
   updateJob: async (_parent, { jobInput, id }, { me }) => {
@@ -91,13 +99,16 @@ const Mutation: JobMutation = {
 
   applyJob: async (_parent, { jobId, companyId, sharerId }, { me }) => {
     try {
-      const hasApply = Candidate.find({
+      const hasApply = await Candidate.findOne({
         candidate: me._id,
-        job: jobId
+        job: jobId,
+        companyApply: companyId
       })
+
       if (hasApply) {
         throw new Error("HAS APPLY")
       }
+
       else {
         const candidate = await candidateService.createCandidate(me, jobId, companyId, sharerId)
         const updateJob = await Job.findByIdAndUpdate(

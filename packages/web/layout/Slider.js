@@ -81,9 +81,9 @@ const SliderLayout = ({ collapsed, isEmployee = false }) => {
       icon: <ShoppingOutlined />,
     },
     {
-      name: 'Responses',
-      href: '/responses',
-      icon: <SyncOutlined />,
+      name: ' Statistics',
+      href: '/statistic',
+      icon: <BarChartOutlined />,
     },
   ]
 

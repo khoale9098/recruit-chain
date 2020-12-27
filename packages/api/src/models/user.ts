@@ -35,8 +35,10 @@ const schema = new Schema({
   }, //Ảnh bìa
   birthday: Date,
   live: String,
-  tokenWork: Number,
-  // following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  tokenWork: {
+    type: Number,
+    default: 1000000
+  },
   connect: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   gender: {
     type: String,

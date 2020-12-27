@@ -1,24 +1,40 @@
 import React from 'react'
-import { Modal, message } from 'antd'
+import { Modal, message, Input, Button } from 'antd'
 import PropTypes from 'prop-types'
-import { FacebookOutlined, LinkedinOutlined, RedditOutlined, PaperClipOutlined } from '@ant-design/icons'
+import { PaperClipOutlined } from '@ant-design/icons'
 
 import { copyToClipboard } from 'utils'
 
 const ShareJob = ({ show, cancel, userId, idJob }) => {
+  const linkToJob = `${window.location.origin}/carrers/${idJob}?sharing=${userId}`
+
   const copyLinkToClipboard = () => {
-    const linkToJob = `${window.location.origin}/carrers/${idJob}?sharing=${userId}`
     copyToClipboard(linkToJob)
     message.success('Copy to clipboard!')
   }
 
   return (
-    <Modal title="Share" footer={null} visible={show} onCancel={cancel}>
-      <div className="flex">
-        <FacebookOutlined className="text-6xl mx-4 hover:text-blue-700 cursor-pointer" />
-        <LinkedinOutlined className="text-6xl  mx-4 hover:text-blue-700 cursor-pointer" />
-        <RedditOutlined className="text-6xl  mx-4 hover:text-blue-700 cursor-pointer" />
-        <PaperClipOutlined className="text-6xl mx-4 hover:text-blue-700 cursor-pointer" onClick={() => copyLinkToClipboard()} />
+    <Modal title="Your personal link" footer={null} visible={show} onCancel={cancel}>
+      <div>
+        <p>
+          Share this link with your friends and get WORK tokens. You will get tokens in any cases: Your friend comes to the
+          interview Your friend gets a job offer and accepts it Information about current hiring status you can see in the
+          Statistics. The payment occurs after the vacancy closing.
+        </p>
+      </div>
+      <div className="my-4">
+        <Input value={linkToJob} />
+      </div>
+      <div className="flex items-center justify-end mt-4">
+        <Button
+          className="flex items-center rounded"
+          type="primary"
+          ghost
+          icon={<PaperClipOutlined />}
+          onClick={() => copyLinkToClipboard()}
+        >
+          Copy to clipboard
+        </Button>
       </div>
     </Modal>
   )
