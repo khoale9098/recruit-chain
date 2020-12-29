@@ -25,13 +25,16 @@ const User = gql`
     note: String,
     experience: [Experience]
     education: [Education]
-    website: String,
-    companyName: String,
-    companyType: String,
-    sizeMin: Int,
-    sizeMax: Int,
+    skill: [Skill]
+    website: String
+    reputation: Int
+    companyName: String
+    companyType: String
+    role: UserRole
+    sizeMin: Int
+    sizeMax: Int
     jobs: [Job],
-    foundedDate: Date,
+    foundedDate: Date
     loginClientIp: String
     searchHistory: [String!]
     isPrivate: Boolean
@@ -45,6 +48,11 @@ const User = gql`
   type UserExperience{
     _id: ID!
     experience: [Experience]
+  }
+
+  type UserSkill{
+    _id: ID!
+    skill: [Skill]
   }
 
   type ActivityLog {
@@ -66,9 +74,15 @@ const User = gql`
     deleted
   }
 
+  enum UserRole {
+    admin
+    user
+  }
+
   enum UserType {
     employee
     employer
+    admin
   }
 
   extend type Query {
@@ -78,6 +92,7 @@ const User = gql`
     currentUser: User
     getMyEducation: UserEducation
     getMyExperience: UserExperience
+    getMySkill: UserSkill
   }
   
   extend type Mutation {
@@ -97,6 +112,7 @@ const User = gql`
     companyName: String
     live: String
     coverImage: String
+    reputation: Int
     title: String
     avatar: String
   }

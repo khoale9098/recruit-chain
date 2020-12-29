@@ -3,6 +3,12 @@ export const ENV = {
   PRODUCTION: 'production',
 } as const
 
+export const COMMON_STATUS = {
+  PENDING: 'pending',
+  APPROVED: 'approved',
+  REJECTED: 'rejected'
+}
+
 export const GENDER = {
   MALE: 'male',
   FEMALE: 'female',
@@ -12,12 +18,17 @@ export const GENDER = {
 export const USER = {
   USER_TYPE: {
     EMPLOYEE: 'employee',
-    EMPLOYER: 'employer'
+    EMPLOYER: 'employer',
+    ADMIN: 'admin'
   },
   STATUS: {
     ACTIVE: 'active',
     DELETED: 'deleted',
   },
+  ROLE: {
+    USER: 'user',
+    ADMIN: 'admin'
+  }
 } as const
 
 

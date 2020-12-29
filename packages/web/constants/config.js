@@ -1,4 +1,5 @@
 export default {
+  STATUS: { PENDING: 'pending', APPROVED: 'approved', REJECTED: 'rejected' },
   USER: {
     USER_TYPE: {
       EMPLOYEE: 'employee',

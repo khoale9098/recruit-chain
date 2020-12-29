@@ -1,5 +1,6 @@
 import { ExperienceResolver } from './IResolver'
 import { Experience, User } from '../../models'
+import { userService } from '../../services'
 
 interface ExperienceMutaion {
   createExperience: ExperienceResolver
@@ -16,6 +17,7 @@ const Mutation: ExperienceMutaion = {
           { $addToSet: { experience: exp._id } },
           { new: true }
         )
+        await userService.updateReputation(me?._id, 'experience ')
       }
       return exp
     }

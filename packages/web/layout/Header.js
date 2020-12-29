@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Layout, Avatar, Dropdown, Menu, Button, Space } from 'antd'
 import { useRouter } from 'next/router'
 import { useQuery, gql, useApolloClient } from '@apollo/client'
@@ -7,6 +7,7 @@ import { logout } from 'core/api'
 import { MenuUnfoldOutlined, MenuFoldOutlined, DownCircleFilled, PlusCircleOutlined } from '@ant-design/icons'
 
 import SearchAnything from 'components/Search/SearchAnything'
+import AddSkillModal from 'components/AddSkillModal'
 
 const CURRENT_USER = gql`
   query currentUser {
@@ -25,7 +26,7 @@ const HeaderLayout = ({ setCollapsed, collapsed }) => {
   const { data } = useQuery(CURRENT_USER)
   const client = useApolloClient()
   const router = useRouter()
-
+  const [showAddSkill, setShowAddSkill] = useState(false)
   const onLogout = async () => {
     client.cache.gc()
     await logout()
@@ -70,10 +71,10 @@ const HeaderLayout = ({ setCollapsed, collapsed }) => {
               </Button>
             ) : (
               <Button
+                onClick={() => setShowAddSkill(true)}
                 type="primary"
                 icon={<PlusCircleOutlined />}
                 className="rounded h-10 flex items-center"
-                onClick={() => router.push('/my-vacancies/add')}
               >
                 Add New Skill
               </Button>
@@ -86,6 +87,7 @@ const HeaderLayout = ({ setCollapsed, collapsed }) => {
             </Dropdown>
           </Space>
         </div>
+        <AddSkillModal show={showAddSkill} cancel={() => setShowAddSkill(false)} />
       </div>
     </Header>
   )

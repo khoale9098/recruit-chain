@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CompanyVacancies from '../CompanyVacancie'
 import RecentVacencies from '../RecentVacancies'
 import ModalEditAbout from './ModalEditAbout'
+import UseAnalytics from '../UseAnalytics'
 
 const AboutUser = ({ about, updateUser, isEmployee }) => {
   const [showEditAbout, setShowEditAbout] = React.useState(false)
@@ -12,11 +13,13 @@ const AboutUser = ({ about, updateUser, isEmployee }) => {
     <>
       <ContainerProfile showModal={() => setShowEditAbout(true)} title="About">
         <p>{about}</p>
-        {!isEmployee && (
+        {!isEmployee ? (
           <>
             <CompanyVacancies />
             <RecentVacencies />
           </>
+        ) : (
+          <UseAnalytics />
         )}
       </ContainerProfile>
       <ModalEditAbout about={about} show={showEditAbout} updateUser={updateUser} cancel={() => setShowEditAbout(false)} />

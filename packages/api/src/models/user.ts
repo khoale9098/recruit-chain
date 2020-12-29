@@ -44,11 +44,21 @@ const schema = new Schema({
     type: String,
     enum: Object(GENDER).values,
   },
+  reputation: {
+    type: Number,
+    default: 0
+  },
   status: {
     type: String,
     default: USER.STATUS.ACTIVE,
     enum: Object(USER.STATUS).values,
   },
+  role: {
+    type: String,
+    enum: Object(USER.ROLE).values,
+    default: USER.ROLE.USER
+  },
+
   userType: {
     type: String,
     enum: Object(USER.USER_TYPE).values,
