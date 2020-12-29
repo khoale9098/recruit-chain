@@ -1,5 +1,6 @@
 import { EducationResolver } from './IResolver'
 import { Education, User } from '../../models'
+import { userService } from '../../services'
 
 interface EducationMutaion {
   createEducation: EducationResolver
@@ -17,6 +18,7 @@ const Mutation: EducationMutaion = {
           { $addToSet: { education: education._id } },
           { new: true }
         )
+        await userService.updateReputation(me._id, 'education')
       }
       return education
     }

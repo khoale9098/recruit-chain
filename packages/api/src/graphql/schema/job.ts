@@ -31,6 +31,7 @@ const Job = gql`
     deleteJob(id: ID!): Job
     applyJob(jobId: ID!, companyId: ID!, sharerId:ID): Job
   }
+  
   extend type Query{
     job(id: ID!): Job
     getJobList(

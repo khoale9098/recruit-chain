@@ -6,6 +6,7 @@ import JobResolver from './job'
 import CandidateResolver from './candidate'
 import EducationResolver from './education'
 import ExperienceResolver from './experience'
+import SkillResolver from './skill'
 
 export default {
   Query: {
@@ -20,7 +21,8 @@ export default {
     ...UserResolver.Mutation,
     ...CandidateResolver.Mutation,
     ...EducationResolver.Mutation,
-    ...ExperienceResolver.Mutation
+    ...ExperienceResolver.Mutation,
+    ...SkillResolver.Mutation
   },
 
   Date: GraphQLDate,

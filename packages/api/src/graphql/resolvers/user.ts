@@ -21,6 +21,7 @@ interface UserQuery {
   currentUser: UserResolver
   getMyEducation: UserResolver
   getMyExperience: UserResolver
+  getMySkill: UserResolver
 }
 
 interface UserMutation {
@@ -88,7 +89,17 @@ const Query: UserQuery = {
     catch (err) {
       throw err
     }
-  }
+  },
+  getMySkill: async (_parent, _, { me }) => {
+    try {
+      const us = await User.findById(me._id, { skill: 1 }).populate('skill')
+      return us
+    }
+    catch (err) {
+      throw err
+    }
+  },
+
 }
 
 

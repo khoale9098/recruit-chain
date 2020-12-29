@@ -5,6 +5,7 @@ import IJob from 'src/interface/IJob'
 import IEducation from 'src/interface/IEducation'
 import ICandidate from 'src/interface/ICandidate'
 import IExperience from 'src/interface/IExperience'
+import ISkill from 'src/interface/ISkill'
 
 interface Context {
   me: IUser
@@ -28,3 +29,5 @@ export type CandidateResolver<R = ICandidate | ICandidate[] | number | null, Par
 export type EducationResolver<R = IEducation | IEducation[] | null, Parent = never> = Resolver<R, Parent>
 
 export type ExperienceResolver<R = IExperience | IExperience[] | null, Parent = never> = Resolver<R, Parent>
+
+export type SkillResolver<R = ISkill | ISkill[] | null, Parent = never> = Resolver<R, Parent>

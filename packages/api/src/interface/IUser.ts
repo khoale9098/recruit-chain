@@ -18,7 +18,8 @@ interface IUser extends Document {
   note?: string,
   following?: Types.ObjectId[] | IUser[],
   connect?: Types.ObjectId[] | IUser[]
-  searchHistory?: string[]
+  searchHistory?: string[],
+  reputation: number,
   activityLogs?: [
     {
       place?: string
@@ -34,8 +35,8 @@ interface IUser extends Document {
   skill?: Types.ObjectId[] | IUser[],
   experience?: Types.ObjectId[] | IUser[],
   education?: Types.ObjectId[] | IUser[],
-  // certifications?: Types.ObjectId[] | IUser[],
-
+  role: string,
+  userType: string,
   website?: string,
   companyName?: string,
   companyType?: string,

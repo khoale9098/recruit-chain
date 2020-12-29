@@ -124,13 +124,16 @@ class UserService extends BaseService<IUser> {
     const randomUser = await User.findOne().skip(rand)
     return randomUser
   }
-  async updateFollowerCount(userId: Types.ObjectId) {
+
+
+  async updateReputation(useId: Types.ObjectId, type: string) {
     try {
-      const followerNo = await User.countDocuments({ following: userId })
-      await User.findByIdAndUpdate(userId, { followerCount: followerNo })
+      const user = await User.findOne({ _id: useId })
+      await User.findByIdAndUpdate(useId, { reputation: user.reputation + 1 })
       return true
-    } catch (err) {
-      console.error(err)
+    }
+    catch (err) {
+      console.log(err)
       throw err
     }
   }

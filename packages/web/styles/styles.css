@@ -29,4 +29,14 @@ body .ck-editor__editable {
   }
 }
 
+table,
+th,
+td {
+  border: 1px solid #eef1f2;
+}
+th,
+td {
+  padding: 15px;
+  text-align: left;
+}
 @import 'tailwindcss/utilities';

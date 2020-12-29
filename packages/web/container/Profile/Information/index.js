@@ -9,6 +9,7 @@ import AvatarEmployee from '../AvatarEmployee'
 // import SocialNetwork from '../SocialNetwork'
 import Experience from '../Experience'
 import Education from '../Education'
+import Skills from '../Skills'
 import ModalEditUser from '../ModalEditUser'
 
 const CURRENT_USER = gql`
@@ -155,6 +156,7 @@ const Information = () => {
       <AboutUser about={data?.currentUser?.about} updateUser={updateUser} isEmployee={isEmployee} />
       {isEmployee && (
         <>
+          <Skills />
           <Education />
           <Experience />
         </>
