@@ -1,4 +1,8 @@
 import Notification from '../../models/notification'
+import IUser from 'src/interface/IUser'
+import { withFilter } from 'graphql-subscriptions'
+import pubsub from '../pubsub'
+
 import { NotificationResolver } from './IResolver'
 
 interface NotificationQuery {
@@ -36,4 +40,15 @@ const Query: NotificationQuery = {
   }
 }
 
-export default { Query }
+const Subscription: any = {
+  notificationAdded: {
+    subscribe: withFilter(
+      () => pubsub.asyncIterator('NOTIFICATION_ADDED'),
+      // be careful when compare ObjectID in mongoose
+      (payload, variables, { user }) => payload.userId.equals(payload.notificationAdded.user)
+    ),
+  }
+}
+
+
+export default { Query, Subscription }

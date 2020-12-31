@@ -13,7 +13,7 @@ const Notification = gql`
     allNotifications(cursor: DateTime): [Notification]
   }
 
-  extend type Query {
+  extend type Subscription {
     notificationAdded: Notification!
   }
 
