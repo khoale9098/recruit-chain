@@ -20,8 +20,8 @@ const Mutation: EducationMutaion = {
         )
         await userService.updateReputation(me._id, 'education')
         await NotificationService.createNoti(me._id, me._id, 'fill')
+        return education
       }
-      return education
     }
     catch (err) {
       throw err

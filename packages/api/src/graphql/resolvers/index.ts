@@ -26,6 +26,9 @@ export default {
     ...ExperienceResolver.Mutation,
     ...SkillResolver.Mutation
   },
+  Subscription: {
+    ...NotificationResolver.Subscription,
+  },
 
   Date: GraphQLDate,
   DateTime: GraphQLDateTime,

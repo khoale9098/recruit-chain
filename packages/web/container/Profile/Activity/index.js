@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { List, Avatar } from 'antd'
 import { useQuery, gql } from '@apollo/client'
 import { ClockCircleOutlined } from '@ant-design/icons'
@@ -20,6 +21,14 @@ const ALL_NOTIFICATION = gql`
   }
 `
 
+const NOTIFICATION_ADDED = gql`
+  subscription notificationAdded {
+    notificationAdded {
+      _id
+    }
+  }
+`
+
 const ActivityDescription = () => {
   return <div>Fill work experience</div>
 }
@@ -34,8 +43,25 @@ const ActivityTitle = ({ time, name }) => {
     </div>
   )
 }
+
 const Activity = () => {
-  const { data, loading } = useQuery(ALL_NOTIFICATION)
+  const { data, loading, subscribeToMore } = useQuery(ALL_NOTIFICATION)
+
+  useEffect(() => {
+    const subscribeToNewMessages = () => {
+      return subscribeToMore({
+        document: NOTIFICATION_ADDED,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+          console.log('subscriptionData: ', subscriptionData)
+        },
+      })
+    }
+    const unsubscribe = subscribeToNewMessages()
+    return () => {
+      if (unsubscribe) unsubscribe()
+    }
+  }, [])
 
   return (
     <List
