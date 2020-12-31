@@ -5,6 +5,7 @@ import experienceSchema from './experience'
 import educationSchema from './education'
 import candidateSchema from './candidate'
 import skillSchema from './skill'
+import notificationSchema from './notifiction'
 
 const linkSchema = gql`
   scalar Date
@@ -33,6 +34,7 @@ const linkSchema = gql`
     type: SortType
   }
 `
+
 export default [
   linkSchema,
   userSchema,
@@ -40,5 +42,6 @@ export default [
   educationSchema,
   jobSchema,
   skillSchema,
-  candidateSchema
+  candidateSchema,
+  notificationSchema
 ]

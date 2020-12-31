@@ -37,10 +37,12 @@ const Skills = () => {
     <ContainerProfile title="Skills" showIcon={false}>
       <table className="w-full">
         <thead className="w-full  py-2">
-          <th>Skill</th>
-          <th>Date of proof</th>
-          <th>Attached document</th>
-          <th>Status</th>
+          <tr>
+            <th>Skill</th>
+            <th>Date of proof</th>
+            <th>Attached document</th>
+            <th>Status</th>
+          </tr>
         </thead>
         <tbody>
           {data?.getMySkill?.skill?.map((sk) => (

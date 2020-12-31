@@ -9,19 +9,22 @@ const modelName = 'notification'
 
 const schema = new Schema(
   {
-    user: {
+    creator: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: true,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'user'
+    },
     type: {
       type: String,
-      default: 'liked',
-      enum: ['fill', 'connect', 'review'],
+      default: 'fill',
+      enum: ['fill', 'review'],
     },
-    connect: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
+    text: {
+      type: String,
     },
   },
   { collection: modelName, timestamps: true }
