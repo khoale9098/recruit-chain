@@ -1,6 +1,6 @@
 import { EducationResolver } from './IResolver'
 import { Education, User } from '../../models'
-import { userService } from '../../services'
+import { userService, NotificationService } from '../../services'
 
 interface EducationMutaion {
   createEducation: EducationResolver
@@ -19,6 +19,7 @@ const Mutation: EducationMutaion = {
           { new: true }
         )
         await userService.updateReputation(me._id, 'education')
+        await NotificationService.createNoti(me._id, me._id, 'fill')
       }
       return education
     }

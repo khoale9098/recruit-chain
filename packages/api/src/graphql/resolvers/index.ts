@@ -7,12 +7,14 @@ import CandidateResolver from './candidate'
 import EducationResolver from './education'
 import ExperienceResolver from './experience'
 import SkillResolver from './skill'
+import NotificationResolver from './notification'
 
 export default {
   Query: {
     ...UserResolver.Query,
     ...JobResolver.Query,
-    ...CandidateResolver.Query
+    ...CandidateResolver.Query,
+    ...NotificationResolver.Query
     // ...commonQuery
   },
 
