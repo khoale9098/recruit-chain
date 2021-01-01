@@ -1,8 +1,10 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { List, Avatar } from 'antd'
+import PropTypes from 'prop-types'
 import { useQuery, gql } from '@apollo/client'
-import { ClockCircleOutlined } from '@ant-design/icons'
+import { ClockCircleOutlined, LikeOutlined } from '@ant-design/icons'
 import moment from 'moment'
+import NotificationText from './NotificationText'
 
 const ALL_NOTIFICATION = gql`
   query allNotifications($cursor: DateTime) {
@@ -17,6 +19,7 @@ const ALL_NOTIFICATION = gql`
       }
       createdAt
       type
+      text
     }
   }
 `
@@ -29,19 +32,42 @@ const NOTIFICATION_ADDED = gql`
   }
 `
 
-const ActivityDescription = () => {
-  return <div>Fill work experience</div>
+const ActivityDescription = ({ text }) => {
+  if (text === '__INIT_ANNOUNCEMENT__') return <NotificationText />
+  return <div>{text}</div>
 }
-const ActivityTitle = ({ time, name }) => {
+
+ActivityDescription.propTypes = {
+  text: PropTypes.string,
+}
+
+const ActivityTitle = ({ time, name, type }) => {
   return (
     <div className="block">
-      <div className="font-bold text-base">{name}</div>
-      <div className="flex flex-row items-center">
-        <ClockCircleOutlined className="text-xs text-red-600 font-bold" />
-        <p className="pl-2 text-sm">{`${moment(time).format('MM/DD')} at ${moment(time).format('HH:mm:ss')}`}</p>
+      <div>
+        <div className="flex justify-between ">
+          <div className="font-bold text-base">{name}</div>
+          {type === 'filled' && (
+            <div className="flex items-center">
+              <LikeOutlined style={{ color: '#bbb', fontSize: '12px' }} />
+              <div className="text-xs ml-1" style={{ color: '#bbb' }}>
+                1 point for Reputation
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-row items-center">
+          <ClockCircleOutlined className="text-xs text-red-600 font-bold" />
+          <p className="pl-2 text-sm">{`${moment(time).format('MM/DD')} at ${moment(time).format('HH:mm:ss')}`}</p>
+        </div>
       </div>
     </div>
   )
+}
+ActivityTitle.propTypes = {
+  time: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.string,
 }
 
 const Activity = () => {
@@ -53,7 +79,13 @@ const Activity = () => {
         document: NOTIFICATION_ADDED,
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
-          console.log('subscriptionData: ', subscriptionData)
+          const { notificationAdded } = subscriptionData?.data
+          return {
+            ...prev,
+            allNotifications: [notificationAdded].concat(
+              prev.allNotifications.filter((conv) => conv.id !== notificationAdded.id)
+            ),
+          }
         },
       })
     }
@@ -84,7 +116,7 @@ const Activity = () => {
                 time={item?.createdAt}
               />
             }
-            description={<ActivityDescription />}
+            description={<ActivityDescription text={item?.text} />}
           />
         </List.Item>
       )}

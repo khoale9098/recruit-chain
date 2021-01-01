@@ -2,6 +2,8 @@
 @import 'tailwindcss/components';
 @import './antd-theme.css';
 @import './antd-apply.css';
+@import './loading.css';
+
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,900&display=swap');
 
 /* Write your own custom base styles here */

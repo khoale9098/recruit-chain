@@ -6,6 +6,7 @@ const Notification = gql`
     user: ID!
     type: String
     creator: User!
+    text: String
     updatedAt: DateTime
     createdAt: DateTime
   }

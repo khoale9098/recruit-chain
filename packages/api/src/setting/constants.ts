@@ -3,6 +3,14 @@ export const ENV = {
   PRODUCTION: 'production',
 } as const
 
+export const NOTIFICATION_ADDED = 'NOTIFICATION_ADDED'
+
+export const NOTIFICATION_TYPE = {
+  FILLED: 'filled',
+  REVIEW: 'review',
+  ANNOUNMENT: 'anoucement'
+} as const
+
 export const COMMON_STATUS = {
   PENDING: 'pending',
   APPROVED: 'approved',

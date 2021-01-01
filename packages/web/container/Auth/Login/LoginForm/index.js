@@ -30,7 +30,7 @@ const LoginForm = () => {
       })
       message.success('Login successfuly!')
     } catch (e) {
-      // message.error('invalid')
+      message.error('Enter the wrong account or password!')
     }
   }
 

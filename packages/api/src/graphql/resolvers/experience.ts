@@ -1,6 +1,7 @@
 import { ExperienceResolver } from './IResolver'
 import { Experience, User } from '../../models'
-import { userService } from '../../services'
+import { userService, NotificationService } from '../../services'
+import { NOTIFICATION_TYPE } from '../../setting/constants'
 
 interface ExperienceMutaion {
   createExperience: ExperienceResolver
@@ -18,6 +19,7 @@ const Mutation: ExperienceMutaion = {
           { new: true }
         )
         await userService.updateReputation(me?._id, 'experience ')
+        await NotificationService.createNoti(me._id, me._id, NOTIFICATION_TYPE.FILLED, 'Filled work experience')
       }
       return exp
     }

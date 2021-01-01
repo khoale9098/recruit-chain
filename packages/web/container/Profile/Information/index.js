@@ -133,20 +133,23 @@ const Information = () => {
                   ? `${data?.currentUser?.firstName} ${data?.currentUser?.lastName}`
                   : data?.currentUser?.companyName}
               </div>
-              {isEmployee && <div className="text-xl">{`${title} at ${name}`}</div>}
-              <div>{data?.currentUser?.live}</div>
+              {isEmployee && <div className="text-xl">{title && `${title} at ${name}`}</div>}
+              <div>{data?.currentUser?.live || ''}</div>
             </div>
             <div>
               {/* <SocialNetwork /> */}
               {isEmployee && (
                 <div className="flex pt-3 items-center " style={{ maxWidth: '232px' }}>
-                  <Avatar
-                    size={32}
-                    className="flex-none box-border border-2 border-solid border-transparent rounded"
-                    shape
-                    src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
-                  />
-                  <div className="font-semibold ml-2">{edu?.getMyEducation?.education?.[0]?.education_org}</div>
+                  {edu?.getMyEducation?.education?.[0]?.education_org && (
+                    <Avatar
+                      size={32}
+                      className="flex-none box-border border-2 border-solid border-transparent rounded"
+                      shape
+                      src="https://media-exp1.licdn.com/dms/image/C510BAQEaVrl7oCuRsg/company-logo_100_100/0?e=1612396800&v=beta&t=DIqbAkSTAW7VxvROkovQ234g5pYKmjsdRScaBBiF0pc"
+                    />
+                  )}
+
+                  <div className="font-semibold ml-2">{edu?.getMyEducation?.education?.[0]?.education_org || ''}</div>
                 </div>
               )}
             </div>

@@ -3,6 +3,7 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 import INotification from 'src/interface/INotification'
 
 import { IPagingModel } from '../interface/IPaging'
+import { NOTIFICATION_TYPE } from '../setting/constants'
 
 const Schema = mongoose.Schema
 const modelName = 'notification'
@@ -20,8 +21,8 @@ const schema = new Schema(
     },
     type: {
       type: String,
-      default: 'fill',
-      enum: ['fill', 'review'],
+      default: NOTIFICATION_TYPE.FILLED,
+      enum: Object(NOTIFICATION_TYPE).values,
     },
     text: {
       type: String,
