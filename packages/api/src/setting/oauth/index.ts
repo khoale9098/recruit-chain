@@ -2,7 +2,8 @@ import { Application, Response, Request } from 'express'
 import _ from 'lodash'
 import User from '../../models/user'
 import { mapProfile2User } from './helper'
-import { userService } from '../../services'
+import { userService, NotificationService } from '../../services'
+import { NOTIFICATION_TYPE } from '../../setting/constants'
 
 const oauth = (app: Application) => {
   app.post('/auth/register', async (req: Request, res: Response) => {
@@ -26,6 +27,11 @@ const oauth = (app: Application) => {
         },
         (req.query.scope as string) || 'mobile'
       )
+      const admin = await User.findOne({ role: 'admin' })
+      await NotificationService.createNoti(user._id, user._id, NOTIFICATION_TYPE.ANNOUNMENT, 'Date of registration')
+      if (admin) {
+        await NotificationService.createNoti(admin._id, user._id, NOTIFICATION_TYPE.ANNOUNMENT, '__INIT_ANNOUNCEMENT__')
+      }
 
       return res.status(200).json({ success: true, user: data })
     } catch (err) {

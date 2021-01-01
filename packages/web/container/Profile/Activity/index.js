@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import { List, Avatar } from 'antd'
+import PropTypes from 'prop-types'
 import { useQuery, gql } from '@apollo/client'
 import { ClockCircleOutlined, LikeOutlined } from '@ant-design/icons'
 import moment from 'moment'
+import NotificationText from './NotificationText'
 
 const ALL_NOTIFICATION = gql`
   query allNotifications($cursor: DateTime) {
@@ -31,20 +33,28 @@ const NOTIFICATION_ADDED = gql`
 `
 
 const ActivityDescription = ({ text }) => {
+  if (text === '__INIT_ANNOUNCEMENT__') return <NotificationText />
   return <div>{text}</div>
 }
-const ActivityTitle = ({ time, name }) => {
+
+ActivityDescription.propTypes = {
+  text: PropTypes.string,
+}
+
+const ActivityTitle = ({ time, name, type }) => {
   return (
     <div className="block">
       <div>
         <div className="flex justify-between ">
           <div className="font-bold text-base">{name}</div>
-          <div className="flex items-center">
-            <LikeOutlined style={{ color: '#bbb', fontSize: '12px' }} />
-            <div className="text-xs ml-1" style={{ color: '#bbb' }}>
-              1 point for Reputation
+          {type === 'filled' && (
+            <div className="flex items-center">
+              <LikeOutlined style={{ color: '#bbb', fontSize: '12px' }} />
+              <div className="text-xs ml-1" style={{ color: '#bbb' }}>
+                1 point for Reputation
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="flex flex-row items-center">
           <ClockCircleOutlined className="text-xs text-red-600 font-bold" />
@@ -53,6 +63,11 @@ const ActivityTitle = ({ time, name }) => {
       </div>
     </div>
   )
+}
+ActivityTitle.propTypes = {
+  time: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.string,
 }
 
 const Activity = () => {

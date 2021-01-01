@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Form, Input, Button, Radio } from 'antd'
+import { Form, Input, Button, Radio, message } from 'antd'
 import { register } from 'core/api'
 
 const REGISTER_FIELD = {
@@ -26,7 +26,8 @@ const RegisterForm = () => {
 
   const onSubmit = async (values) => {
     const res = await register(values)
-    if (res) router.replace('/login')
+    message.success('Register Successful!')
+    if (res) router.replace('/')
   }
   return (
     <Form onFinish={onSubmit} form={form}>
