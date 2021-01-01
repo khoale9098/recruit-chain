@@ -1,21 +1,22 @@
 import { Types } from 'mongoose'
 
 import INotification from '../interface/INotification'
-import IUser from '../interface/IUser'
-import { User, Notification } from '../models'
+import { Notification } from '../models'
 import pubsub from '../graphql/pubsub'
-
+import { NOTIFICATION_ADDED } from '../setting/constants'
 import BaseService from './baseService'
 
 class NotificationService extends BaseService<INotification>{
-  async createNoti(userId: Types.ObjectId, myId: Types.ObjectId, type: string): Promise<INotification> {
+  async createNoti(userId: Types.ObjectId, myId: Types.ObjectId, type: string, text: string): Promise<INotification> {
     try {
       const notification = await this.model.create({
         user: myId,
         creator: userId,
-        type
+        type,
+        text
       } as INotification)
-      pubsub.publish('NOTIFICATION_ADDED', {
+
+      pubsub.publish(NOTIFICATION_ADDED, {
         notificationAdded: notification,
         userId: myId
       })

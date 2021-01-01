@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Form, Input, Button, Radio } from 'antd'
 import { register } from 'core/api'
 
@@ -20,10 +21,12 @@ const USER_TYPE = {
 
 const RegisterForm = () => {
   const [userType, setUserType] = useState(USER_TYPE.EMPLOYEE)
+  const router = useRouter()
   const [form] = Form.useForm()
+
   const onSubmit = async (values) => {
     const res = await register(values)
-    console.log(res)
+    if (res) router.replace('/login')
   }
   return (
     <Form onFinish={onSubmit} form={form}>

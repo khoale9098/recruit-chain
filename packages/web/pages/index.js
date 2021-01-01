@@ -12,6 +12,7 @@ export default function IndexPage() {
   const router = useRouter()
 
   const { token, userType } = useRecoilValue(authAtoms.userPersisted)
+
   const redirectIfLogged = () => {
     if (token) {
       if (userType === 'employee') router.replace('/profile')
@@ -23,7 +24,15 @@ export default function IndexPage() {
   }, [token])
 
   if (token) {
-    return null
+    return (
+      <div className="w-full flex justify-center items-center h-screen">
+        <div className="lds-facebook">
+          <div />
+          <div />
+          <div />
+        </div>
+      </div>
+    )
   }
 
   return (
