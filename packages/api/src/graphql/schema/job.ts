@@ -10,7 +10,7 @@ const Job = gql`
     description: String
     requirement: String
     expiredAt:  DateTime
-    candidate: Candidate
+    candidate: [Candidate]
     location: String
     slug: String
     vacancies: Int
