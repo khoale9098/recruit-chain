@@ -22,7 +22,7 @@ const JobItem = ({ item }) => {
         <div className="pl-4 relative">
           <Link className="w-full relative mb-5" href={userType === 'employee' ? `carrers/${item?._id}` : `/job/${item?._id}`}>
             <a>
-              <h2 className="font-bold cursor-pointer text-primary text-base hover:text-blue-600">{item?.title}</h2>
+              <h2 className="font-bold cursor-pointer text-base hover:text-blue-600">{item?.title}</h2>
             </a>
           </Link>
           <div className="flex ">

@@ -86,7 +86,7 @@ const User = gql`
   }
 
   extend type Query {
-    user(id: ID): User
+    user(id: ID!): User
     getUser(username: String): User
     getUserList(type: UserType = any, filter: FilterUser, limit: Int, offset: Int): [User!]
     currentUser: User

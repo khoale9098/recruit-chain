@@ -1,10 +1,12 @@
 /* eslint-disable react/no-danger */
 import React from 'react'
 import { useQuery, gql, useMutation } from '@apollo/client'
+import Link from 'next/link'
 import { Card, Spin, Modal, Button, message } from 'antd'
 import { useRouter } from 'next/router'
 import { SendOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
+import ShareJob from 'components/ShareJob'
 
 const JOB = gql`
   query job($id: ID!) {
@@ -23,6 +25,9 @@ const JOB = gql`
       title
       salaryFrom
       salaryTo
+      candidate {
+        _id
+      }
       location
       vacancies
       description
@@ -36,6 +41,7 @@ const CURRENT_USER = gql`
   query currentUser {
     currentUser {
       userType
+      _id
     }
   }
 `
@@ -75,6 +81,7 @@ const JobDetail = () => {
   const {
     query: { id, sharing },
   } = useRouter()
+  const [showShare, setShowShare] = React.useState(false)
 
   const { data, loading } = useQuery(JOB, {
     variables: {
@@ -126,21 +133,50 @@ const JobDetail = () => {
             <div className="w-8 h-8 ">
               <img src="https://agecodehr.com/img/icons/approved.svg" alt="" />
             </div>
-            <div className="text-white uppercase px-3">Apply</div>
+            <div className="text-white font-semibold px-3">Apply Now</div>
           </div>
         </Button>
         <Button
-          className="mx-4 border-primary uppercase text-primary rounded outline-none focus:outline-none w-full"
-          style={{ height: '48px' }}
+          icon={<SendOutlined className="text-xl" />}
+          className="mx-4 flex items-center border-primary  text-primary rounded outline-none focus:outline-none w-full"
+          style={{ height: '47px' }}
+          onClick={() => setShowShare(true)}
         >
-          <SendOutlined className="text-xl" />
-          Share
+          <div className="px-2 font-semibold"> Recommend for a job</div>
         </Button>
       </div>
     )
   }
+
+  const Title = () => {
+    return (
+      <div className="flex">
+        <div>
+          <Link href={`/profile_view/${data?.job?.company?._id}`}>
+            <div style={{ width: '128px', height: '128px' }}>
+              <img
+                style={{ width: '128px', height: '128px' }}
+                className="rounded-md box-border bg-clip-border"
+                src={data?.job?.company?.avatar}
+                alt="company"
+              />
+            </div>
+          </Link>
+        </div>
+        <div className="flex flex-col ml-4">
+          <h3 className="text-xl font-semibold">{data?.job?.title}</h3>
+          <div className="flex mt-2 items-center" style={{ color: 'rgba(0,0,0,.6)' }}>
+            <span>{data?.job?.company?.companyName}</span>
+            <span className="px-2"> - </span>
+            <p>{data?.job?.location}</p>
+          </div>
+          <p>{`${data?.job?.candidate?.length} applicants`}</p>
+        </div>
+      </div>
+    )
+  }
   return (
-    <Card title={<h3 className="text-lg font-bold">{data?.job?.title}</h3>} extra={isEmployee && renderApply()}>
+    <Card title={<Title />} extra={isEmployee && renderApply()}>
       <div className="flex  m-md:flex-col m-xs:mx-4">
         <div className="w-full m-md:w-full pr-4 m-md:pr-0 m-md:m-auto">
           <div>
@@ -160,6 +196,7 @@ const JobDetail = () => {
           </div>
         </div>
       </div>
+      {showShare && <ShareJob show={showShare} cancel={() => setShowShare(false)} userId={cur?.currentUser?._id} idJob={id} />}
     </Card>
   )
 }
