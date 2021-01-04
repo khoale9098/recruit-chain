@@ -8,7 +8,6 @@ import {
   FormOutlined,
   AppstoreOutlined,
   SyncOutlined,
-  ProjectOutlined,
   BarChartOutlined,
   DesktopOutlined,
   ShoppingOutlined,
@@ -46,11 +45,6 @@ const SliderLayout = ({ collapsed, isEmployee = false }) => {
       name: 'Responses',
       href: '/responses',
       icon: <SyncOutlined />,
-    },
-    {
-      name: 'Finance',
-      href: '/finance',
-      icon: <ProjectOutlined />,
     },
     {
       name: ' Statistics',

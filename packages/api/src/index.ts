@@ -9,6 +9,8 @@ import helmet from 'helmet'
 import { createServer } from 'http'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
+import config from './setting/env'
+
 // Blockchain
 import Web3 from 'web3'
 import contact from 'truffle-contract'
@@ -62,8 +64,7 @@ app.get('/robots.txt', (req, res) => {
 oauth(app)
 
 
-const dbUri = `mongodb://localhost:27017/recruit-chain`
-
+const dbUri = config.DB_URL
 mongoose.connect(dbUri, {
   useCreateIndex: true,
   useNewUrlParser: true,
@@ -87,9 +88,8 @@ graphqlServer.applyMiddleware({ app, path: '/graphql' })
 const httpServer = createServer(app)
 graphqlServer.installSubscriptionHandlers(httpServer)
 
-const PORT = 3002
 
-httpServer.listen({ port: PORT }, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}${graphqlServer.graphqlPath}`)
-  console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${graphqlServer.subscriptionsPath}`)
+httpServer.listen({ port: config.PORT }, () => {
+  console.log(`🚀 Server ready at http://localhost:${config.PORT}${graphqlServer.graphqlPath}`)
+  console.log(`🚀 Subscriptions ready at ws://localhost:${config.PORT}${graphqlServer.subscriptionsPath}`)
 })
