@@ -22,9 +22,9 @@ const Login = () => {
         <div className="mt-12">
           <LoginForm />
           <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
-            Dont have an account ?
+            Don't have an account?
             <Link href="/signup">
-              <a className="cursor-pointer text-indigo-600 hover:text-indigo-800">Sign up</a>
+              <a className="cursor-pointer pl-1 text-indigo-600 hover:text-indigo-800">Sign up</a>
             </Link>
           </div>
         </div>

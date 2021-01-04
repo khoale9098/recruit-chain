@@ -6,7 +6,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { authAtoms } from '../store'
 
 const USER = gql`
-  query user($id: ID) {
+  query user($id: ID!) {
     user(id: $id) {
       _id
       companyName

@@ -97,6 +97,9 @@ const JobDetail = () => {
     onCompleted() {
       message.success('Apply Job Successful!')
     },
+    onError() {
+      message.error('You have applied for this job!')
+    },
   })
 
   if (loading) {
@@ -153,7 +156,7 @@ const JobDetail = () => {
       <div className="flex">
         <div>
           <Link href={`/profile_view/${data?.job?.company?._id}`}>
-            <div style={{ width: '128px', height: '128px' }}>
+            <div className="cursor-pointer" style={{ width: '128px', height: '128px' }}>
               <img
                 style={{ width: '128px', height: '128px' }}
                 className="rounded-md box-border bg-clip-border"

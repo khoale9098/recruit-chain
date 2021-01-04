@@ -22,6 +22,9 @@ const CURRENT_USER = gql`
       lastName
       createdAt
       updatedAt
+      skill {
+        _id
+      }
       coverImage
       about
       live
@@ -159,7 +162,7 @@ const Information = () => {
       <AboutUser about={data?.currentUser?.about} updateUser={updateUser} isEmployee={isEmployee} />
       {isEmployee && (
         <>
-          <Skills />
+          {data?.currentUser?.skill?.length > 0 && <Skills />}
           <Education />
           <Experience />
         </>

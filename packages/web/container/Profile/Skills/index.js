@@ -2,7 +2,6 @@ import React from 'react'
 import ContainerProfile from 'components/ContainerProfile'
 import { useQuery, gql } from '@apollo/client'
 import { Tag } from 'antd'
-import { CONFIG } from '../../../constants'
 
 const GET_MY_SKILL = gql`
   query getMySkill {

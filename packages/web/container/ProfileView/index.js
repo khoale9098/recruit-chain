@@ -9,6 +9,19 @@ const GET_USER_BY_ID = gql`
   query user($id: ID!) {
     user(id: $id) {
       _id
+      companyName
+      avatar
+      firstName
+      lastName
+      createdAt
+      updatedAt
+      skill {
+        _id
+      }
+      coverImage
+      about
+      live
+      userType
     }
   }
 `
@@ -23,6 +36,7 @@ const ProfileViewUI = () => {
     },
   })
 
+  console.log('data: ', data)
   return (
     <>
       <div className="flex bg-white items-center shadow-xs">
