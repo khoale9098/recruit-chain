@@ -7,7 +7,7 @@ import ICandidate from 'src/interface/ICandidate'
 import IExperience from 'src/interface/IExperience'
 import ISkill from 'src/interface/ISkill'
 import INotification from 'src/interface/INotification'
-
+import IReview from 'src/interface/IReview'
 interface Context {
   me: IUser
   user: IUser
@@ -34,3 +34,5 @@ export type ExperienceResolver<R = IExperience | IExperience[] | null, Parent = 
 export type SkillResolver<R = ISkill | ISkill[] | null, Parent = never> = Resolver<R, Parent>
 
 export type NotificationResolver<R = INotification | INotification[] | null | Boolean, Parent = never> = Resolver<R, Parent>
+
+export type ReviewResolver<R = IReview | IReview[] | null | Boolean, Parent = never> = Resolver<R, Parent>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Card, Button, Form, message } from 'antd'
 import { gql, useMutation } from '@apollo/client'
+import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import { pickBy, identity } from 'lodash'
 import PropTypes from 'prop-types'
@@ -20,11 +21,12 @@ const CREATE_JOB = gql`
 `
 
 const FormAddJob = ({ isEdit, job }) => {
+  const router = useRouter()
   const [form] = Form.useForm()
   const [addJob] = useMutation(CREATE_JOB, {
     onCompleted() {
       message.success('Add job successful!')
-      window.location.reload()
+      router.replace('/my-vacancies')
     },
     onError(err) {
       if (err.message === 'YOU DONT HAVE ENOUGH TOKEN') {

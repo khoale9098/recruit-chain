@@ -15,6 +15,7 @@ const GET_LIST_CANDIDATE = gql`
         _id
         firstName
         lastName
+        reputation
         avatar
       }
       status
@@ -29,7 +30,7 @@ const GET_LIST_CANDIDATE = gql`
   }
 `
 
-const { ACCEPTED, INTERVIEW_FIRST_ROUND, INTERVIEW_SECOND_ROUND, OFFER, REJECT, RESPONSES, RESERVE } = CONFIG.JOB.APPLY_STATUS
+const { ACCEPTED, INTERVIEW, OFFER, REJECT, RESPONSES, RESERVE } = CONFIG.JOB.APPLY_STATUS
 const DashboardEmployer = () => {
   const {
     query: { query },
@@ -46,8 +47,8 @@ const DashboardEmployer = () => {
     <Card>
       <div className="flex w-full" style={{ flex: '0 0 1/4' }}>
         <ApplyStatistic status={RESPONSES} isActive={status === RESPONSES || !status} />
-        <ApplyStatistic status={INTERVIEW_FIRST_ROUND} isActive={status === INTERVIEW_FIRST_ROUND} />
-        <ApplyStatistic status={INTERVIEW_SECOND_ROUND} isActive={status === INTERVIEW_SECOND_ROUND} />
+        <ApplyStatistic status={INTERVIEW} isActive={status === INTERVIEW} />
+
         <ApplyStatistic status={OFFER} isActive={status === OFFER} />
       </div>
       <div className="flex w-full mt-4">

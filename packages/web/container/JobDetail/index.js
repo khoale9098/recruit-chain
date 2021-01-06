@@ -95,7 +95,7 @@ const JobDetail = () => {
 
   const [submitApplyJob] = useMutation(APPLY_JOB, {
     onCompleted() {
-      message.success('Apply Job Successful!')
+      message.success('Your response has been sent!!')
     },
     onError() {
       message.error('You have applied for this job!')
@@ -118,7 +118,7 @@ const JobDetail = () => {
       cancelText: 'Cancel',
       onOk: () => {
         submitApplyJob({
-          variables: { jobId: id, companyId: data?.job?.company?._id, sharerId: sharing },
+          variables: { jobId: id, companyId: data?.job?.company?._id, sharerId: sharing || cur?.currentUser?._id },
         })
       },
     })

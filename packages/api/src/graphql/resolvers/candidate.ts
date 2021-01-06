@@ -19,8 +19,10 @@ interface CandidateQuery {
 const Mutation: CandidateMutation = {
   changeStatus: async (_parent, { status, candidateId }) => {
     try {
-      const updateCandidate = Candidate.findByIdAndUpdate({ _id: candidateId }, { status }, { new: true })
-      //  
+      const updateCandidate = await Candidate.findByIdAndUpdate({ _id: candidateId }, { status }, { new: true })
+      if (updateCandidate.status === JOB.APPLY_STATUS.ACCEPTED) {
+        await candidateService.fakeSmartContract(updateCandidate.candidate, updateCandidate.sharer, updateCandidate.job)
+      }
       return updateCandidate
     }
     catch (err) {

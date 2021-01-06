@@ -37,10 +37,11 @@ const ModalAddEdit = ({ show, cancel, education, isEdit, refetch }) => {
       refetch()
     },
   })
+
   const [updateEducation, { loading: loadingUpdated }] = useMutation(UPDATE_EDUCATION, {
     onCompleted() {
       refetch()
-      message.success('Update S')
+      message.success('Update Successful!')
     },
   })
 

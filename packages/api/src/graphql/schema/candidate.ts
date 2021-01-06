@@ -23,8 +23,7 @@ const Candidate = gql`
 
   enum CandidateStatus {
     responses
-    interview1
-    inteview2
+    interview
     offer
     rejected
     working

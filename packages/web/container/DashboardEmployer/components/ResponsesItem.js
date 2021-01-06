@@ -1,6 +1,7 @@
 import { Avatar, Button, Modal } from 'antd'
 import PropTypes from 'prop-types'
 import { useMutation, gql } from '@apollo/client'
+import { useRouter } from 'next/router'
 import { UserOutlined, StepForwardOutlined, CloseCircleOutlined, DownSquareOutlined } from '@ant-design/icons'
 import { useHover } from 'hooks/useHover'
 import { CONFIG } from '../../../constants'
@@ -13,21 +14,21 @@ const CHANGE_STATUS = gql`
   }
 `
 
-const { ACCEPTED, INTERVIEW_FIRST_ROUND, INTERVIEW_SECOND_ROUND, OFFER, REJECT, RESERVE, RESPONSES } = CONFIG.JOB.APPLY_STATUS
+const { ACCEPTED, INTERVIEW, OFFER, REJECT, RESERVE, RESPONSES } = CONFIG.JOB.APPLY_STATUS
 
 const FAKE_INDEX_STATUS = {
   0: RESPONSES,
-  1: INTERVIEW_FIRST_ROUND,
-  2: INTERVIEW_SECOND_ROUND,
-  3: OFFER,
-  4: ACCEPTED,
+  1: INTERVIEW,
+  2: OFFER,
+  3: ACCEPTED,
 }
 
 const ResponsesItem = ({ item }) => {
+  const router = useRouter()
   const [hoverRef, isHovered] = useHover()
   const [submitChangeStatus] = useMutation(CHANGE_STATUS, {
     onCompleted() {
-      window.location.reload()
+      router.reload()
     },
   })
 
@@ -68,33 +69,39 @@ const ResponsesItem = ({ item }) => {
     })
   }
 
+  const isHiddenButton = item?.status !== REJECT && item?.status !== ACCEPTED && item?.status !== RESERVE
+
   return (
     <div className="flex justify-between w-full" ref={hoverRef} style={{ minHeight: '150px' }}>
       <div className="w-full flex">
         <div className="flex-none mr-4">
           <Avatar
             size={48}
-            src={item?.candidate?.avatar}
+            src={item?.status !== RESPONSES ? item?.candidate?.avatar : ''}
             className="flex justify-center items-center"
             icon={<UserOutlined />}
           />
         </div>
         <div className="flex flex-col w-full">
           <h3 className={`font-bold text-base  ${isHovered ? 'text-primary' : ''}`}>
-            {`${item?.candidate?.firstName} ${item?.candidate?.lastName}`}
+            {item?.status !== RESPONSES ? `${item?.candidate?.firstName} ${item?.candidate?.lastName}` : 'User Applied'}
           </h3>
-          <p className="font-semibold text-gray-700">{item?.job.title}</p>
-          <div className="flex items-center text-gray-600">
-            <div className="h-4 w-4">
-              <img src="/img/icons/flagmap.png" alt="" />
+          {item?.status !== RESPONSES && (
+            <div>
+              <p className="font-semibold text-gray-700">{item?.job.title}</p>
+              <div className="flex items-center text-gray-600">
+                <div className="h-4 w-4">
+                  <img src="/img/icons/flagmap.png" alt="" />
+                </div>
+                <p className="ml-2  text-gray-600">{item?.candidate?.address || 'Ho Chi Minh City'}</p>
+              </div>
+              <div className=" text-gray-600">{`Reputation : ${item?.candidate?.reputation || 0}`}</div>
             </div>
-            <p className="ml-2  text-gray-600">{item?.candidate?.address || 'Ho Chi Minh City'}</p>
-          </div>
-          <div className=" text-gray-600">Competency: 0</div>
+          )}
         </div>
       </div>
 
-      {item?.status !== REJECT && (
+      {isHiddenButton && (
         <div style={{ width: '200px' }}>
           <Button
             icon={<StepForwardOutlined />}
@@ -132,6 +139,5 @@ const ResponsesItem = ({ item }) => {
 
 ResponsesItem.propTypes = {
   item: PropTypes.objectOf(PropTypes.any),
-  refetchCount: PropTypes.func,
 }
 export default ResponsesItem

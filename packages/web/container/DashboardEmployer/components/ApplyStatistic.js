@@ -14,8 +14,7 @@ const COUNT_CANDIDATE = gql`
 
 const STATUS_LANG = {
   responses: 'Responses',
-  interview1: 'Interview first round',
-  inteview2: 'Inteview second round',
+  interview: 'Interview',
   offer: 'Offer',
   rejected: 'Rejected',
   working: 'Working',

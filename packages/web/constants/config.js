@@ -22,8 +22,7 @@ export default {
     },
     APPLY_STATUS: {
       RESPONSES: 'responses',
-      INTERVIEW_FIRST_ROUND: 'interview1',
-      INTERVIEW_SECOND_ROUND: 'inteview2',
+      INTERVIEW: 'interview',
       OFFER: 'offer',
       REJECT: 'rejected',
       RESERVE: 'reserve',
