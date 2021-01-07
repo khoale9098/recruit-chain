@@ -101,6 +101,18 @@ const ResponsesItem = ({ item }) => {
         </div>
       </div>
 
+      {item?.status === ACCEPTED && (
+        <div style={{ width: '200px' }}>
+          <Button
+            ghost
+            type="primary"
+            className="w-32 flex justify-center items-center cursor-pointer"
+            onClick={() => router.push('/profile_view/[id]', `/profile_view/${item?.candidate._id}`)}
+          >
+            View Profile
+          </Button>
+        </div>
+      )}
       {isHiddenButton && (
         <div style={{ width: '200px' }}>
           <Button

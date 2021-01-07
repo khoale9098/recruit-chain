@@ -3,7 +3,6 @@ import moment from 'moment'
 import { useQuery, gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import InformationView from 'container/ProfileView/InformationView'
-import RightSideContainer from 'container/Profile/RightSideContainer'
 
 const GET_USER_BY_ID = gql`
   query user($id: ID!) {
@@ -30,13 +29,12 @@ const ProfileViewUI = () => {
   const {
     query: { id },
   } = useRouter()
-  const { data, loading, error } = useQuery(GET_USER_BY_ID, {
+  const { data } = useQuery(GET_USER_BY_ID, {
     variables: {
       id,
     },
   })
 
-  console.log('data: ', data)
   return (
     <>
       <div className="flex bg-white items-center shadow-xs">
