@@ -25,6 +25,7 @@ const User = gql`
     note: String,
     experience: [Experience]
     education: [Education]
+    review: [Review]
     skill: [Skill]
     website: String
     reputation: Int
@@ -54,6 +55,12 @@ const User = gql`
     _id: ID!
     skill: [Skill]
   }
+
+  type UserReview{
+    _id: ID!
+    review: [Review]
+  }
+
 
   type ActivityLog {
     _id: String
@@ -93,6 +100,7 @@ const User = gql`
     getMyEducation: UserEducation
     getMyExperience: UserExperience
     getMySkill: UserSkill
+    getReviewById(userId: ID!): UserReview
   }
   
   extend type Mutation {

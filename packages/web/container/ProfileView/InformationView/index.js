@@ -1,12 +1,46 @@
 import React from 'react'
 import CoverImage from 'container/Profile/CoverImage'
-import { Button } from 'antd'
+import { gql, useLazyQuery } from '@apollo/client'
+
+import { Button, List, Card } from 'antd'
+import PropTypes from 'prop-types'
 import AvatarEmployee from 'container/Profile/AvatarEmployee'
 import AboutUser from 'container/Profile/AboutUser'
+import ResponseItem from 'container/Responses/ResponseItem'
+
 import ReviewModel from '../ReviewModel'
+
+const GET_REVIEW = gql`
+  query getReviewById($userId: ID!) {
+    getReviewById(userId: $userId) {
+      _id
+      review {
+        _id
+        content
+        user {
+          _id
+        }
+        creator {
+          _id
+        }
+      }
+    }
+  }
+`
 
 const InformationView = ({ user }) => {
   const [showReview, setShowReview] = React.useState(false)
+  const [loadReview, { data: review, loading: loadingReview }] = useLazyQuery(GET_REVIEW)
+
+  React.useEffect(() => {
+    if (user?._id) {
+      loadReview({
+        variables: {
+          userId: user?._id,
+        },
+      })
+    }
+  }, [user?._id])
 
   const isEmployee = user?.userType === 'employee'
   return (
@@ -22,8 +56,6 @@ const InformationView = ({ user }) => {
               <div className="font-bold text-2xl">
                 {isEmployee ? `${user?.firstName} ${user?.lastName}` : user?.companyName}
               </div>
-
-              {/* {isEmployee && <div className="text-xl">{title && `${title} at ${name}`}</div>} */}
               <div>{user?.live || ''}</div>
             </div>
           </div>
@@ -40,7 +72,19 @@ const InformationView = ({ user }) => {
           </div>
         </div>
       </section>
-      <AboutUser about={user?.about} isEmployee={isEmployee} />
+      <AboutUser about={user?.about} isEmployee={isEmployee} review />
+      <Card>
+        <List
+          loading={loadingReview}
+          dataSource={review?.getReviewById?.review}
+          renderItem={(item) => (
+            <List.Item>
+              <ResponseItem item={item} />
+            </List.Item>
+          )}
+        />
+      </Card>
+
       {/* {isEmployee && (
         <>
           {user?.skill?.length > 0 && <Skills />}
@@ -48,10 +92,13 @@ const InformationView = ({ user }) => {
           <Experience />
         </>
       )} */}
-      {console.log('show Review :', showReview)}
-      {showReview && <ReviewModel show={showReview} cancel={() => setShowReview(false)} />}
+
+      {showReview && <ReviewModel show={showReview} cancel={() => setShowReview(false)} userReviewId={user?._id} />}
     </div>
   )
 }
 
+InformationView.propTypes = {
+  user: PropTypes.objectOf(PropTypes.any),
+}
 export default InformationView

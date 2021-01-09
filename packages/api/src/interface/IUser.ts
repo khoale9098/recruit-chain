@@ -35,6 +35,7 @@ interface IUser extends Document {
   skill?: Types.ObjectId[] | IUser[],
   experience?: Types.ObjectId[] | IUser[],
   education?: Types.ObjectId[] | IUser[],
+  review?: Types.ObjectId[] | IUser[],
   role: string,
   userType: string,
   website?: string,

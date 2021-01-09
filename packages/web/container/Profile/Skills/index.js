@@ -1,7 +1,7 @@
 import React from 'react'
 import ContainerProfile from 'components/ContainerProfile'
 import { useQuery, gql } from '@apollo/client'
-import { Tag } from 'antd'
+import { Tag, Progress } from 'antd'
 
 const GET_MY_SKILL = gql`
   query getMySkill {
@@ -47,6 +47,9 @@ const Skills = () => {
           {data?.getMySkill?.skill?.map((sk) => (
             <tr key={sk._id}>
               <td>{sk.title}</td>
+              <td>
+                <Progress percent={30} size="small" />
+              </td>
               <td>{sk.date_of_proof}</td>
               <td>{sk.attachment || sk.url}</td>
               <td>

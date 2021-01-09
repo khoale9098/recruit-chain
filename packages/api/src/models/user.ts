@@ -69,6 +69,10 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'skill'
   }],
+  review: [{
+    type: Schema.Types.ObjectId,
+    ref: 'review'
+  }],
   competency: {
     type: Number,
     default: 0

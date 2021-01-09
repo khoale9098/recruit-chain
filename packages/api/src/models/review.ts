@@ -23,12 +23,6 @@ const schema = new Schema(
       ref: 'user',
       required: true
     },
-    status: {
-      type: String,
-      enum: Object(COMMON_STATUS).values,
-      default: COMMON_STATUS.PENDING,
-      required: true
-    }
   },
   { collection: modelName, timestamps: true }
 )

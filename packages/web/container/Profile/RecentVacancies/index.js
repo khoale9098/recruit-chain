@@ -14,7 +14,7 @@ const GET_MY_VACANCIES = gql`
     }
   }
 `
-const RecentVacencies = () => {
+const RecentVacencies = ({ review }) => {
   const { data, loading } = useQuery(GET_MY_VACANCIES)
 
   const _renderSeeAll = () => (
@@ -24,6 +24,7 @@ const RecentVacencies = () => {
       </Tag>
     </Link>
   )
+
   return (
     <div className="mt-4">
       <Card title="Recent Vacancies" extra={_renderSeeAll()}>

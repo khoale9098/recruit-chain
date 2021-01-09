@@ -8,6 +8,7 @@ import EducationResolver from './education'
 import ExperienceResolver from './experience'
 import SkillResolver from './skill'
 import NotificationResolver from './notification'
+import ReviewResolver from './review'
 
 export default {
   Query: {
@@ -24,7 +25,8 @@ export default {
     ...CandidateResolver.Mutation,
     ...EducationResolver.Mutation,
     ...ExperienceResolver.Mutation,
-    ...SkillResolver.Mutation
+    ...SkillResolver.Mutation,
+    ...ReviewResolver.Mutation
   },
   Subscription: {
     ...NotificationResolver.Subscription,
