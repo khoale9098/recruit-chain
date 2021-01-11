@@ -24,4 +24,12 @@ export default {
     key: 'atoms_user_info',
     default: {},
   }),
+
+  check: atom({
+    key: 'check',
+    default: {
+      check: '',
+      userId: null,
+    },
+  }),
 }

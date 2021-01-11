@@ -1,9 +1,11 @@
 import React from 'react'
 import CoverImage from 'container/Profile/CoverImage'
 import { gql, useLazyQuery } from '@apollo/client'
-
+import { useRecoilValue } from 'recoil'
 import { Button, List, Card } from 'antd'
 import PropTypes from 'prop-types'
+import Skills from 'container/Profile/Skills'
+
 import AvatarEmployee from 'container/Profile/AvatarEmployee'
 import AboutUser from 'container/Profile/AboutUser'
 import ResponseItem from 'container/Responses/ResponseItem'
@@ -43,6 +45,7 @@ const InformationView = ({ user }) => {
   }, [user?._id])
 
   const isEmployee = user?.userType === 'employee'
+
   return (
     <div className="w-full flex-1">
       <section className="overflow-visible bg-white rounded-sm shadow-md">
@@ -73,6 +76,8 @@ const InformationView = ({ user }) => {
         </div>
       </section>
       <AboutUser about={user?.about} isEmployee={isEmployee} review />
+      <Skills candidate />
+
       <Card>
         <List
           loading={loadingReview}
@@ -84,10 +89,10 @@ const InformationView = ({ user }) => {
           )}
         />
       </Card>
+      {<Skills />}
 
       {/* {isEmployee && (
         <>
-          {user?.skill?.length > 0 && <Skills />}
           <Education />
           <Experience />
         </>

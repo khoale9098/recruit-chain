@@ -47,14 +47,13 @@ const ActivityTitle = ({ time, name, type }) => {
       <div>
         <div className="flex justify-between ">
           <div className="font-bold text-base">{name}</div>
-          {type === 'filled' && (
-            <div className="flex items-center">
-              <LikeOutlined style={{ color: '#bbb', fontSize: '12px' }} />
-              <div className="text-xs ml-1" style={{ color: '#bbb' }}>
-                1 point for Reputation
-              </div>
+
+          <div className="flex items-center">
+            <LikeOutlined style={{ color: '#bbb', fontSize: '12px' }} />
+            <div className="text-xs ml-1" style={{ color: '#bbb' }}>
+              1 point for Reputation
             </div>
-          )}
+          </div>
         </div>
         <div className="flex flex-row items-center">
           <ClockCircleOutlined className="text-xs text-red-600 font-bold" />
@@ -114,6 +113,7 @@ const Activity = () => {
                     : `${item?.creator?.firstName} ${item?.creator?.lastName}`
                 }
                 time={item?.createdAt}
+                type={item?.type}
               />
             }
             description={<ActivityDescription text={item?.text} />}

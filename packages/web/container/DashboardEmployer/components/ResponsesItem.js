@@ -1,10 +1,13 @@
 import { Avatar, Button, Modal } from 'antd'
 import PropTypes from 'prop-types'
 import { useMutation, gql } from '@apollo/client'
+import { useSetRecoilState } from 'recoil'
+
 import { useRouter } from 'next/router'
 import { UserOutlined, StepForwardOutlined, CloseCircleOutlined, DownSquareOutlined } from '@ant-design/icons'
 import { useHover } from 'hooks/useHover'
 import { CONFIG } from '../../../constants'
+import { authAtoms } from '../../../store'
 
 const CHANGE_STATUS = gql`
   mutation changeStatus($status: CandidateStatus!, $candidateId: ID!) {
@@ -26,6 +29,8 @@ const FAKE_INDEX_STATUS = {
 const ResponsesItem = ({ item }) => {
   const router = useRouter()
   const [hoverRef, isHovered] = useHover()
+  const setCheck = useSetRecoilState(authAtoms.check)
+
   const [submitChangeStatus] = useMutation(CHANGE_STATUS, {
     onCompleted() {
       router.reload()
@@ -40,6 +45,10 @@ const ResponsesItem = ({ item }) => {
         content: `Do you want to next step?`,
         okText: 'OK',
         onOk: async () => {
+          setCheck({
+            check: item?.status,
+            userId: item?._id,
+          })
           await submitChangeStatus({
             variables: {
               candidateId: item?._id,
@@ -84,35 +93,36 @@ const ResponsesItem = ({ item }) => {
         </div>
         <div className="flex flex-col w-full">
           <h3 className={`font-bold text-base  ${isHovered ? 'text-primary' : ''}`}>
-            {item?.status !== RESPONSES ? `${item?.candidate?.firstName} ${item?.candidate?.lastName}` : 'User Applied'}
+            {`${item?.candidate?.firstName} ${item?.candidate?.lastName}`}
           </h3>
-          {item?.status !== RESPONSES && (
-            <div>
-              <p className="font-semibold text-gray-700">{item?.job.title}</p>
-              <div className="flex items-center text-gray-600">
-                <div className="h-4 w-4">
-                  <img src="/img/icons/flagmap.png" alt="" />
-                </div>
-                <p className="ml-2  text-gray-600">{item?.candidate?.address || 'Ho Chi Minh City'}</p>
+
+          <div>
+            <p className="font-semibold text-gray-700">{item?.job.title}</p>
+            <div className="flex items-center text-gray-600">
+              <div className="h-4 w-4">
+                <img src="/img/icons/flagmap.png" alt="" />
               </div>
-              <div className=" text-gray-600">{`Reputation : ${item?.candidate?.reputation || 0}`}</div>
+              <p className="ml-2  text-gray-600">{item?.candidate?.address || 'Ho Chi Minh City'}</p>
             </div>
+            <div className=" text-gray-600">{`Reputation : ${item?.candidate?.reputation || 0}`}</div>
+          </div>
+          {item?.status !== RESPONSES && (
+            <h3 className={`font-bold text-base  ${isHovered ? 'text-primary' : ''}`}>{`${item?.candidate?.email}`}</h3>
           )}
         </div>
       </div>
 
-      {item?.status === ACCEPTED && (
-        <div style={{ width: '200px' }}>
-          <Button
-            ghost
-            type="primary"
-            className="w-32 flex justify-center items-center cursor-pointer"
-            onClick={() => router.push('/profile_view/[id]', `/profile_view/${item?.candidate._id}`)}
-          >
-            View Profile
-          </Button>
-        </div>
-      )}
+      <div style={{ width: '200px' }}>
+        <Button
+          ghost
+          type="primary"
+          className="w-32 flex justify-center items-center cursor-pointer"
+          onClick={() => router.push('/profile_view/[id]', `/profile_view/${item?.candidate._id}`)}
+        >
+          View Profile
+        </Button>
+      </div>
+
       {isHiddenButton && (
         <div style={{ width: '200px' }}>
           <Button

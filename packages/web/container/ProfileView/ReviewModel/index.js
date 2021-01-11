@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal, Input, Button } from 'antd'
 import PropTypes from 'prop-types'
 import { useMutation, gql } from '@apollo/client'
+import { useRouter } from 'next/router'
 
 const REVIEW_USER = gql`
   mutation createReview($reviewInput: ReviewInput!) {
@@ -11,8 +12,13 @@ const REVIEW_USER = gql`
   }
 `
 const ReviewModel = ({ show, cancel, userReviewId }) => {
+  const router = useRouter()
   const [content, setContent] = React.useState('')
-  const [reviewEmployee, { loading }] = useMutation(REVIEW_USER)
+  const [reviewEmployee, { loading }] = useMutation(REVIEW_USER, {
+    onCompleted() {
+      router.reload()
+    },
+  })
 
   const handleSendReview = async () => {
     if (content && userReviewId) {

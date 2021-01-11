@@ -70,7 +70,7 @@ class CandidateService extends BaseService<ICandidate>{
         const sharer = await User.findOne({ _id: sharingId })
 
         if (candidate.tokenWork && sharer.tokenWork) {
-          await User.findOneAndUpdate({ _id: candidateId }, { tokenWork: Number(candidate.tokenWork + (jobToReward.tokenBonus * 40) / 100) }, { new: true })
+          await User.findOneAndUpdate({ _id: candidateId }, { tokenWork: Number(candidate.tokenWork + (jobToReward.tokenBonus * 50) / 100) }, { new: true })
         }
         if (sharer.tokenWork) {
           await User.findOneAndUpdate({ _id: sharingId }, { tokenWork: Number(sharer.tokenWork + (jobToReward.tokenBonus * 50) / 100) }, { new: true })

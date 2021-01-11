@@ -15,6 +15,7 @@ const GET_LIST_CANDIDATE = gql`
         _id
         firstName
         lastName
+        email
         reputation
         avatar
       }

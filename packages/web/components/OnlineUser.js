@@ -20,6 +20,7 @@ const CURRENT_USER = gql`
 
 const OnlineUser = ({ isCollapsed }) => {
   const { data } = useQuery(CURRENT_USER)
+  console.log('data:', data)
 
   const isEmployee = data?.currentUser?.userType === 'employee'
   return (

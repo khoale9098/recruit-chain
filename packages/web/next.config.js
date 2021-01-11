@@ -20,8 +20,9 @@ module.exports = (phase) => {
     },
 
     production: {
-      SERVER_URI: 'http://localhost:4000',
-      APOLLO_SERVER_URI: 'http://localhost:4000/graphql',
+      SERVER_URI: 'http://localhost:3002',
+      APOLLO_SERVER_URI: 'http://localhost:3002/graphql',
+      APOLLO_WS_URI: 'ws://localhost:3002/graphql',
       TOKEN_UPLOAD:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjksImF0IjoiMjAyMDEyMjMiLCJpYXQiOjE2MDg2OTM4ODZ9.6WrFIyA8q6Nc1T78uK7-dWm-6vllKF9mngmw4cQr-KI',
     },

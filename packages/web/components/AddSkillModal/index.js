@@ -2,6 +2,7 @@ import React from 'react'
 import { useMutation, gql } from '@apollo/client'
 import { Modal, Form, Input, Space, Button, message } from 'antd'
 import PropTypes from 'prop-types'
+import { useRouter } from 'next/router'
 import { FileTextOutlined } from '@ant-design/icons'
 
 const SKILL_FIELD = {
@@ -18,9 +19,11 @@ const ADD_SKILL = gql`
   }
 `
 const AddSkillModal = ({ show, cancel }) => {
+  const router = useRouter()
   const [submitAddSkill] = useMutation(ADD_SKILL, {
     onCompleted() {
       message.success('Add Skill Successful!')
+      router.reload()
     },
   })
   const onSubmit = async (values) => {
@@ -44,11 +47,9 @@ const AddSkillModal = ({ show, cancel }) => {
         >
           <Input />
         </Form.Item>
-        {/* <Form.Item label="Please Attach file">
-          <Upload>
-            <Button icon={<FileTextOutlined />}>Click to Upload</Button>
-          </Upload>
-        </Form.Item> */}
+        <Form.Item label="Note" name={SKILL_FIELD.ATTACHMENT}>
+          <Input.TextArea />
+        </Form.Item>
         <div className="flex justify-end items-center">
           <Space>
             <Form.Item>

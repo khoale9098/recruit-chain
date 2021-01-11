@@ -71,6 +71,13 @@ const SettingProfile = () => {
 
   return (
     <div className="flex flex-col">
+      <Card title={<div className="font-semibold">Email</div>}>
+        <Form layout="vertical">
+          <Form.Item label="Email" name="email">
+            <Input value="khoale9098@gmail.com" />
+          </Form.Item>
+        </Form>
+      </Card>
       <Card title={<div className="font-semibold">Security</div>}>
         <Form layout="vertical" onFinish={onsubmit}>
           <Form.Item label="Old Password" name="oldPassword" rules={validationRules.newPassword}>

@@ -10,7 +10,7 @@ const User = gql`
     lastName: String
     email: String
     phone: String
-    tokenWork: Int
+    tokenWork: Float
     about: String
     live: String
     avatar: String
